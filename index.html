@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,877 +7,1701 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-/* ─── CSS Variables ─────────────────────────────────────────── */
-:root {
-  --bg: #0a0a0f;
-  --bg2: #111118;
-  --bg3: #1a1a24;
-  --surface: rgba(255,255,255,0.04);
-  --surface2: rgba(255,255,255,0.08);
-  --border: rgba(255,255,255,0.08);
-  --text: #f0f0f8;
-  --text2: rgba(240,240,248,0.55);
-  --accent: #a78bfa;
-  --accent2: #7c3aed;
-  --accent3: #c4b5fd;
-  --glow: rgba(167,139,250,0.25);
-  --glow2: rgba(167,139,250,0.1);
-  --pink: #f472b6;
-  --cyan: #67e8f9;
-  --radius: 20px;
-  --radius-sm: 12px;
-  --nav-h: 70px;
-  --transition: 0.4s cubic-bezier(0.16,1,0.3,1);
-}
-[data-theme="light"] {
-  --bg: #f5f4ff;
-  --bg2: #ede9fe;
-  --bg3: #ddd6fe;
-  --surface: rgba(124,58,237,0.06);
-  --surface2: rgba(124,58,237,0.12);
-  --border: rgba(124,58,237,0.15);
-  --text: #1e1b3a;
-  --text2: rgba(30,27,58,0.55);
-  --accent: #7c3aed;
-  --accent2: #5b21b6;
-  --accent3: #a78bfa;
-  --glow: rgba(124,58,237,0.2);
-  --glow2: rgba(124,58,237,0.07);
-  --pink: #db2777;
-  --cyan: #0891b2;
+/* ════════════════════════════════════════
+   VARIABLES — DARK ONLY
+════════════════════════════════════════ */
+:root{
+  --bg:#07070d;
+  --bg2:#0e0e18;
+  --bg3:#15152a;
+  --glass:rgba(255,255,255,0.04);
+  --glass2:rgba(255,255,255,0.07);
+  --glass3:rgba(255,255,255,0.11);
+  --border:rgba(255,255,255,0.08);
+  --border2:rgba(167,139,250,0.25);
+  --text:#f0f0f8;
+  --text2:rgba(240,240,248,0.5);
+  --accent:#a78bfa;
+  --accent2:#7c3aed;
+  --accent3:#c4b5fd;
+  --pink:#f472b6;
+  --cyan:#67e8f9;
+  --green:#34d399;
+  --glow:rgba(167,139,250,0.3);
+  --glow2:rgba(167,139,250,0.12);
+  --glow-pink:rgba(244,114,182,0.2);
+  --radius:22px;
+  --radius-sm:14px;
+  --nav-h:68px;
 }
 
-/* ─── Reset & Base ──────────────────────────────────────────── */
+/* ════ RESET ════ */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;font-size:16px}
+html{scroll-behavior:smooth}
 body{
   font-family:'Inter',sans-serif;
   background:var(--bg);
   color:var(--text);
   overflow-x:hidden;
-  cursor:none;
-  transition:background var(--transition),color var(--transition);
+  min-height:100vh;
 }
 a{color:inherit;text-decoration:none}
-img{max-width:100%;border-radius:var(--radius)}
+img{max-width:100%;display:block}
 ::selection{background:var(--glow);color:var(--accent3)}
-
-/* ─── Custom Cursor ─────────────────────────────────────────── */
-#cursor{
-  position:fixed;width:12px;height:12px;border-radius:50%;
-  background:var(--accent);z-index:9999;pointer-events:none;
-  transform:translate(-50%,-50%);transition:transform 0.1s,width 0.3s,height 0.3s,opacity 0.3s;
-  mix-blend-mode:screen;
-}
-#cursor-trail{
-  position:fixed;width:40px;height:40px;border-radius:50%;
-  border:1.5px solid var(--accent);z-index:9998;pointer-events:none;
-  transform:translate(-50%,-50%);transition:left 0.18s ease,top 0.18s ease,width 0.3s,height 0.3s;
-  opacity:0.5;
-}
-body:hover #cursor{opacity:1}
-
-/* ─── Scrollbar ─────────────────────────────────────────────── */
-::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar{width:3px}
 ::-webkit-scrollbar-track{background:var(--bg)}
-::-webkit-scrollbar-thumb{background:var(--accent2);border-radius:4px}
+::-webkit-scrollbar-thumb{background:var(--accent2);border-radius:3px}
 
-/* ─── Navbar ────────────────────────────────────────────────── */
+/* ════ ANIMATED BACKGROUND MESH ════ */
+body::before{
+  content:'';
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 80% 50% at 20% 10%, rgba(124,58,237,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 85% 85%, rgba(244,114,182,0.07) 0%, transparent 55%),
+    radial-gradient(ellipse 40% 60% at 60% 40%, rgba(103,232,249,0.04) 0%, transparent 50%);
+  animation:mesh-shift 18s ease-in-out infinite alternate;
+}
+@keyframes mesh-shift{
+  0%{background-position:0% 0%,100% 100%,50% 50%}
+  100%{background-position:10% 20%,90% 80%,60% 40%}
+}
+
+/* ════ LOADER ════ */
+#loader{
+  position:fixed;inset:0;z-index:99999;
+  background:var(--bg);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;
+  transition:opacity .7s ease,visibility .7s ease;
+}
+#loader.hide{opacity:0;visibility:hidden;pointer-events:none}
+.loader-logo{
+  font-family:'Clash Display',sans-serif;font-size:2.4rem;font-weight:700;
+  background:linear-gradient(135deg,var(--accent3),var(--accent),var(--pink));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  animation:logo-pulse 1.6s ease-in-out infinite;
+}
+@keyframes logo-pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.72;transform:scale(.97)}}
+.loader-msg{font-size:1rem;font-weight:500;color:var(--accent3);min-height:1.6em;text-align:center}
+@keyframes fade-in-msg{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.loader-bar-track{width:200px;height:3px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden}
+.loader-bar-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--accent2),var(--accent),var(--pink));border-radius:3px;transition:width .35s ease}
+.loader-dots{display:flex;gap:8px}
+.loader-dots span{width:8px;height:8px;border-radius:50%;background:var(--accent);animation:dot-up 1.2s ease-in-out infinite}
+.loader-dots span:nth-child(2){animation-delay:.2s;background:var(--pink)}
+.loader-dots span:nth-child(3){animation-delay:.4s;background:var(--cyan)}
+@keyframes dot-up{0%,100%{transform:translateY(0);opacity:.35}50%{transform:translateY(-10px);opacity:1}}
+
+/* ════ NAV ════ */
 nav{
   position:fixed;top:0;left:0;right:0;z-index:1000;
   height:var(--nav-h);
   display:flex;align-items:center;justify-content:space-between;
   padding:0 clamp(20px,5vw,60px);
-  background:rgba(10,10,15,0.7);
-  backdrop-filter:blur(20px) saturate(180%);
-  -webkit-backdrop-filter:blur(20px) saturate(180%);
+  background:rgba(7,7,13,0.75);
+  backdrop-filter:blur(24px) saturate(180%);
+  -webkit-backdrop-filter:blur(24px) saturate(180%);
   border-bottom:1px solid var(--border);
-  transition:background var(--transition);
 }
-[data-theme="light"] nav{background:rgba(245,244,255,0.75)}
 .nav-logo{
-  font-family:'Clash Display',sans-serif;
-  font-size:1.5rem;font-weight:700;
+  font-family:'Clash Display',sans-serif;font-size:1.5rem;font-weight:700;
   background:linear-gradient(135deg,var(--accent3),var(--accent),var(--pink));
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  letter-spacing:-0.02em;
+  letter-spacing:-.02em;cursor:pointer;flex-shrink:0;
 }
-.nav-links{display:flex;gap:8px;align-items:center}
+.nav-right{display:flex;align-items:center;gap:3px}
+.nav-links{display:flex;gap:3px;align-items:center}
 .nav-links a{
-  font-size:0.82rem;font-weight:500;letter-spacing:0.04em;
-  padding:7px 14px;border-radius:100px;
-  color:var(--text2);
-  transition:color 0.25s,background 0.25s;
+  font-size:.81rem;font-weight:500;letter-spacing:.04em;
+  padding:7px 13px;border-radius:100px;color:var(--text2);
+  cursor:pointer;transition:color .25s,background .25s;
 }
-.nav-links a:hover,.nav-links a.active{color:var(--text);background:var(--surface2)}
-.theme-toggle{
-  width:42px;height:42px;border-radius:50%;border:none;
-  background:var(--surface2);color:var(--text);cursor:none;
-  font-size:1.1rem;display:flex;align-items:center;justify-content:center;
-  transition:background 0.25s,transform 0.3s;margin-left:8px;
+.nav-links a:hover,.nav-links a.active{color:var(--text);background:var(--glass2)}
+.hamburger{
+  display:none;flex-direction:column;justify-content:center;gap:5px;
+  width:40px;height:40px;background:var(--glass2);border:1px solid var(--border);
+  border-radius:10px;cursor:pointer;padding:10px;flex-shrink:0;margin-left:6px;
 }
-.theme-toggle:hover{background:var(--surface);transform:rotate(20deg)}
-.hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:none;padding:8px}
-.hamburger span{display:block;width:22px;height:2px;background:var(--text);border-radius:2px;transition:0.3s}
+.hamburger span{display:block;width:18px;height:2px;background:var(--text);border-radius:2px;transition:all .3s ease;transform-origin:center}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.mobile-menu{
+  display:none;position:fixed;top:var(--nav-h);left:0;right:0;z-index:999;
+  background:rgba(7,7,13,.97);backdrop-filter:blur(24px);
+  border-bottom:1px solid var(--border);
+  padding:12px 16px 18px;flex-direction:column;gap:4px;
+}
+.mobile-menu.open{display:flex;animation:slide-down .28s ease both}
+@keyframes slide-down{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+.mobile-menu a{padding:12px 16px;border-radius:12px;font-size:.95rem;font-weight:500;color:var(--text2);cursor:pointer;transition:background .2s,color .2s}
+.mobile-menu a:hover,.mobile-menu a.active{background:var(--glass2);color:var(--text)}
 
-/* ─── Pages ─────────────────────────────────────────────────── */
-.page{
-  min-height:100vh;padding-top:var(--nav-h);
-  display:none;opacity:0;transform:translateY(20px);
-  transition:opacity 0.5s ease,transform 0.5s ease;
-}
+/* ════ PAGES ════ */
+.page{min-height:100vh;padding-top:var(--nav-h);display:none;opacity:0;transform:translateY(14px);transition:opacity .45s ease,transform .45s ease;position:relative;z-index:1}
 .page.active{display:block;opacity:1;transform:translateY(0)}
-
-/* ─── Hero / Home ────────────────────────────────────────────── */
-#home{
-  display:none;
-  align-items:center;justify-content:center;
-  min-height:100vh;
-  background:
-    radial-gradient(ellipse 70% 60% at 80% 20%, rgba(167,139,250,0.12) 0%, transparent 60%),
-    radial-gradient(ellipse 50% 40% at 10% 80%, rgba(244,114,182,0.08) 0%, transparent 50%),
-    var(--bg);
-  flex-direction:column;
-  text-align:center;
-  padding:100px clamp(20px,5vw,60px) 60px;
-  position:relative;overflow:hidden;
-}
+#home{display:none}
 #home.active{display:flex}
 
-/* Floating orbs */
-.orb{
-  position:absolute;border-radius:50%;filter:blur(60px);
-  animation:float 8s ease-in-out infinite;pointer-events:none;
+/* ════ HOME ════ */
+#home{
+  flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:100px clamp(20px,5vw,60px) 60px;
+  min-height:100vh;overflow:hidden;
 }
-.orb1{width:400px;height:400px;background:rgba(167,139,250,0.08);top:-10%;right:-5%;animation-delay:0s}
-.orb2{width:300px;height:300px;background:rgba(244,114,182,0.06);bottom:10%;left:-5%;animation-delay:-4s}
-.orb3{width:200px;height:200px;background:rgba(103,232,249,0.05);top:40%;left:30%;animation-delay:-2s}
-@keyframes float{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-30px) scale(1.05)}}
+/* Floating orbs */
+.orb{position:absolute;border-radius:50%;filter:blur(80px);animation:orb-float 9s ease-in-out infinite;pointer-events:none;z-index:0}
+.orb1{width:500px;height:500px;background:rgba(124,58,237,.1);top:-15%;right:-10%}
+.orb2{width:350px;height:350px;background:rgba(244,114,182,.07);bottom:5%;left:-8%;animation-delay:-4s}
+.orb3{width:250px;height:250px;background:rgba(103,232,249,.05);top:45%;left:35%;animation-delay:-2s}
+@keyframes orb-float{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-32px) scale(1.05)}}
 
 /* Avatar */
-.avatar-wrap{
-  position:relative;width:140px;height:140px;margin:0 auto 32px;
-  animation:avatar-in 1s cubic-bezier(0.16,1,0.3,1) both;
-}
-@keyframes avatar-in{from{opacity:0;transform:scale(0.7) translateY(20px)}to{opacity:1;transform:scale(1) translateY(0)}}
-.avatar-wrap img,.avatar-placeholder{
-  width:140px;height:140px;border-radius:50%;
-  object-fit:cover;display:block;
-}
-.avatar-placeholder{
-  background:linear-gradient(135deg,var(--accent2),var(--pink));
-  display:flex;align-items:center;justify-content:center;
-  font-family:'Clash Display',sans-serif;font-size:3rem;font-weight:700;color:#fff;
-}
+.avatar-wrap{position:relative;width:148px;height:148px;margin:0 auto 28px;animation:av-in 1s cubic-bezier(.16,1,.3,1) both;z-index:1}
+@keyframes av-in{from{opacity:0;transform:scale(.65) translateY(24px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.avatar-wrap img{width:148px;height:148px;border-radius:50%;object-fit:cover}
 .avatar-ring{
-  position:absolute;inset:-6px;border-radius:50%;
+  position:absolute;inset:-7px;border-radius:50%;
   background:conic-gradient(var(--accent),var(--pink),var(--cyan),var(--accent));
-  z-index:-1;animation:spin 4s linear infinite;
-  mask:radial-gradient(farthest-side,transparent calc(100% - 3px),black calc(100% - 3px));
-  -webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 3px),black calc(100% - 3px));
+  z-index:-1;animation:ring-spin 4s linear infinite;
+  mask:radial-gradient(farthest-side,transparent calc(100% - 3px),#000 calc(100% - 3px));
+  -webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 3px),#000 calc(100% - 3px));
 }
-@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes ring-spin{to{transform:rotate(360deg)}}
 
 .hero-tag{
-  display:inline-block;
-  background:var(--surface2);border:1px solid var(--border);
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--glass2);border:1px solid var(--border2);
   border-radius:100px;padding:6px 16px;
-  font-size:0.75rem;font-weight:500;letter-spacing:0.08em;
-  color:var(--accent3);text-transform:uppercase;
-  margin-bottom:20px;
-  animation:fade-up 0.8s 0.2s both;
+  font-size:.74rem;font-weight:500;letter-spacing:.08em;color:var(--accent3);text-transform:uppercase;
+  margin-bottom:18px;animation:fade-up .8s .2s both;z-index:1;
 }
+.hero-tag::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--green);animation:blink 2s ease infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+
 .hero-title{
   font-family:'Clash Display',sans-serif;
-  font-size:clamp(2.8rem,8vw,6rem);
-  font-weight:700;line-height:1.05;
-  letter-spacing:-0.03em;
-  animation:fade-up 0.8s 0.3s both;
+  font-size:clamp(2.8rem,8vw,6.5rem);
+  font-weight:700;line-height:1.04;letter-spacing:-.035em;
+  animation:fade-up .8s .3s both;z-index:1;
 }
 .hero-title .grad{
-  background:linear-gradient(90deg,var(--accent3),var(--accent),var(--pink));
+  background:linear-gradient(90deg,var(--accent3) 0%,var(--accent) 40%,var(--pink) 80%);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-size:200%;
+  animation:grad-shift 4s ease-in-out infinite alternate;
 }
-.hero-sub{
-  font-size:clamp(1rem,2.5vw,1.25rem);
-  color:var(--text2);max-width:560px;margin:20px auto 0;
-  font-weight:300;line-height:1.7;
-  animation:fade-up 0.8s 0.4s both;
-}
-@keyframes fade-up{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+@keyframes grad-shift{0%{background-position:0%}100%{background-position:100%}}
 
-.hero-btns{
-  display:flex;gap:12px;justify-content:center;flex-wrap:wrap;
-  margin-top:36px;animation:fade-up 0.8s 0.5s both;
-}
+.hero-sub{font-size:clamp(.95rem,2.2vw,1.15rem);color:var(--text2);max-width:500px;margin:16px auto 0;font-weight:300;line-height:1.75;animation:fade-up .8s .4s both;z-index:1}
+@keyframes fade-up{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+
+.hero-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:30px;animation:fade-up .8s .5s both;z-index:1}
 .btn-primary{
-  background:linear-gradient(135deg,var(--accent2),var(--accent));
-  color:#fff;border:none;padding:14px 28px;border-radius:100px;
-  font-size:0.9rem;font-weight:600;cursor:none;letter-spacing:0.02em;
-  box-shadow:0 0 30px var(--glow);
-  transition:transform 0.2s,box-shadow 0.2s;
+  background:linear-gradient(135deg,var(--accent2),var(--accent));color:#fff;border:none;
+  padding:13px 28px;border-radius:100px;font-size:.9rem;font-weight:600;cursor:pointer;
+  letter-spacing:.02em;box-shadow:0 0 32px var(--glow);
+  transition:transform .25s,box-shadow .25s;position:relative;overflow:hidden;
 }
-.btn-primary:hover{transform:translateY(-2px) scale(1.02);box-shadow:0 0 50px var(--glow)}
+.btn-primary::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.15),transparent);opacity:0;transition:opacity .25s}
+.btn-primary:hover{transform:translateY(-3px) scale(1.03);box-shadow:0 0 54px var(--glow)}
+.btn-primary:hover::after{opacity:1}
 .btn-outline{
-  background:var(--surface);border:1px solid var(--border);
-  color:var(--text);padding:14px 28px;border-radius:100px;
-  font-size:0.9rem;font-weight:500;cursor:none;
-  transition:background 0.25s,border-color 0.25s,transform 0.2s;
-}
-.btn-outline:hover{background:var(--surface2);border-color:var(--accent);transform:translateY(-2px)}
-
-/* Preview cards in hero */
-.hero-preview{
-  display:flex;gap:16px;justify-content:center;flex-wrap:wrap;
-  margin-top:60px;animation:fade-up 0.8s 0.65s both;
-}
-.preview-card{
-  background:var(--surface);border:1px solid var(--border);
-  border-radius:var(--radius);padding:20px 28px;
-  text-align:left;min-width:180px;
+  background:var(--glass);border:1px solid var(--border);color:var(--text);
+  padding:13px 28px;border-radius:100px;font-size:.9rem;font-weight:500;cursor:pointer;
   backdrop-filter:blur(10px);
-  transition:transform 0.3s,border-color 0.3s,box-shadow 0.3s;
+  transition:background .25s,border-color .25s,transform .25s;
 }
-.preview-card:hover{transform:translateY(-6px);border-color:var(--accent);box-shadow:0 16px 40px var(--glow2)}
-.preview-card .pc-icon{font-size:1.5rem;margin-bottom:10px}
-.preview-card .pc-label{font-size:0.75rem;color:var(--text2);margin-bottom:4px;letter-spacing:0.05em;text-transform:uppercase}
-.preview-card .pc-val{font-family:'Clash Display',sans-serif;font-size:1.4rem;font-weight:700;color:var(--accent3)}
-.preview-card .pc-link{
-  font-size:0.78rem;color:var(--accent);display:inline-flex;align-items:center;gap:4px;margin-top:8px;
-  border:1px solid var(--border);border-radius:100px;padding:4px 10px;
-  transition:background 0.2s;
-}
-.preview-card .pc-link:hover{background:var(--surface2)}
+.btn-outline:hover{background:var(--glass2);border-color:var(--accent);transform:translateY(-3px)}
 
-/* ─── Section shared ──────────────────────────────────────────── */
-.section{padding:80px clamp(20px,5vw,80px)}
-.section-label{
-  font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;
-  color:var(--accent);font-weight:600;margin-bottom:12px;
+.hero-preview{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:48px;animation:fade-up .8s .65s both;z-index:1}
+/* Glass preview cards */
+.preview-card{
+  background:var(--glass);border:1px solid var(--border);border-radius:var(--radius);
+  padding:18px 22px;text-align:left;min-width:158px;cursor:pointer;
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  transition:transform .35s cubic-bezier(.16,1,.3,1),border-color .3s,box-shadow .3s;
+  position:relative;overflow:hidden;
 }
-.section-title{
-  font-family:'Clash Display',sans-serif;
-  font-size:clamp(2rem,5vw,3.5rem);font-weight:700;
-  line-height:1.1;letter-spacing:-0.03em;
-  margin-bottom:16px;
-}
-.section-sub{font-size:1rem;color:var(--text2);max-width:520px;line-height:1.7}
-.divider{height:1px;background:var(--border);margin:0 clamp(20px,5vw,80px)}
+.preview-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.05),transparent);opacity:0;transition:opacity .3s}
+.preview-card:hover{transform:translateY(-7px);border-color:var(--border2);box-shadow:0 16px 48px var(--glow2)}
+.preview-card:hover::before{opacity:1}
+.pc-icon{font-size:1.4rem;margin-bottom:8px}
+.pc-label{font-size:.68rem;color:var(--text2);margin-bottom:3px;letter-spacing:.05em;text-transform:uppercase}
+.pc-val{font-family:'Clash Display',sans-serif;font-size:1.2rem;font-weight:700;color:var(--accent3)}
+.pc-link{font-size:.75rem;color:var(--accent);display:inline-flex;align-items:center;gap:4px;margin-top:7px;border:1px solid var(--border);border-radius:100px;padding:3px 9px;transition:background .2s;backdrop-filter:blur(10px)}
+.pc-link:hover{background:var(--glass2)}
 
-/* ─── About Page ─────────────────────────────────────────────── */
-#about{background:var(--bg)}
-.about-grid{
-  display:grid;grid-template-columns:1fr 1fr;gap:60px;
-  align-items:start;max-width:1200px;margin:0 auto;
-}
+/* ════ SECTION SHARED ════ */
+.sec-wrap{max-width:1200px;margin:0 auto;padding:80px clamp(20px,5vw,80px)}
+.section-label{font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:10px}
+.section-title{font-family:'Clash Display',sans-serif;font-size:clamp(1.9rem,4.5vw,3.2rem);font-weight:700;line-height:1.1;letter-spacing:-.03em;margin-bottom:14px}
+.section-sub{font-size:.97rem;color:var(--text2);max-width:520px;line-height:1.75}
+
+/* ════ ABOUT ════ */
+#about{background:transparent}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start}
 .about-img-wrap{position:relative}
 .about-img{
-  width:100%;aspect-ratio:4/5;object-fit:cover;
-  border-radius:var(--radius);
+  width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:var(--radius);
+  border:1px solid var(--border);
 }
-.about-img-placeholder{
-  width:100%;aspect-ratio:4/5;
-  background:linear-gradient(135deg,var(--bg3),var(--bg2));
-  border-radius:var(--radius);border:1px solid var(--border);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:12px;color:var(--text2);font-size:0.85rem;
-}
-.about-img-placeholder .pi-icon{font-size:3rem}
 .about-badge{
-  position:absolute;bottom:-16px;right:-16px;
+  position:absolute;bottom:-14px;right:-14px;
   background:linear-gradient(135deg,var(--accent2),var(--accent));
-  border-radius:var(--radius);padding:20px 24px;
-  box-shadow:0 8px 32px var(--glow);
-  animation:float 5s ease-in-out infinite;
+  border-radius:var(--radius);padding:16px 22px;
+  box-shadow:0 8px 40px var(--glow);
+  animation:orb-float 5s ease-in-out infinite;
 }
-.about-badge .ab-num{font-family:'Clash Display',sans-serif;font-size:2rem;font-weight:700;color:#fff}
-.about-badge .ab-txt{font-size:0.75rem;color:rgba(255,255,255,0.75);margin-top:2px}
-.about-content{padding-top:20px}
-.about-content .section-title{margin-bottom:20px}
-.about-bio{font-size:1.05rem;line-height:1.8;color:var(--text2);margin-bottom:28px}
-.skills-wrap{margin-bottom:32px}
-.skills-label{font-size:0.8rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--text2);margin-bottom:14px;font-weight:500}
-.skill-chips{display:flex;flex-wrap:wrap;gap:8px}
+.ab-num{font-family:'Clash Display',sans-serif;font-size:1.9rem;font-weight:700;color:#fff}
+.ab-txt{font-size:.72rem;color:rgba(255,255,255,.72);margin-top:2px}
+.about-bio{font-size:.97rem;line-height:1.82;color:var(--text2);margin-bottom:18px}
+.skills-wrap{margin-bottom:24px}
+.skills-label{font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;color:var(--text2);margin-bottom:11px;font-weight:500}
+.skill-chips{display:flex;flex-wrap:wrap;gap:7px}
 .chip{
-  padding:7px 16px;border-radius:100px;font-size:0.8rem;font-weight:500;
-  border:1px solid var(--border);background:var(--surface);
-  display:flex;align-items:center;gap:6px;
-  transition:background 0.2s,border-color 0.2s,transform 0.2s;
+  padding:7px 15px;border-radius:100px;font-size:.78rem;font-weight:500;
+  border:1px solid var(--border);
+  background:var(--glass);backdrop-filter:blur(8px);
+  display:flex;align-items:center;gap:5px;
+  transition:background .2s,border-color .25s,transform .25s,box-shadow .25s;
 }
-.chip:hover{background:var(--surface2);border-color:var(--accent);transform:translateY(-2px)}
-.chip .dot{width:6px;height:6px;border-radius:50%;background:var(--accent)}
-.about-social{display:flex;gap:12px;flex-wrap:wrap}
+.chip:hover{background:var(--glass2);border-color:var(--accent);transform:translateY(-2px);box-shadow:0 4px 20px var(--glow2)}
+.chip .dot{width:6px;height:6px;border-radius:50%}
+.about-social{display:flex;gap:9px;flex-wrap:wrap;margin-top:8px}
 .social-btn{
-  display:inline-flex;align-items:center;gap:8px;
-  padding:11px 20px;border-radius:100px;
-  border:1px solid var(--border);background:var(--surface);
-  font-size:0.85rem;font-weight:500;
-  transition:all 0.25s;
+  display:inline-flex;align-items:center;gap:7px;padding:9px 17px;border-radius:100px;
+  border:1px solid var(--border);
+  background:var(--glass);backdrop-filter:blur(8px);
+  font-size:.82rem;font-weight:500;cursor:pointer;
+  transition:all .25s;
 }
-.social-btn:hover{background:var(--surface2);border-color:var(--accent);transform:translateY(-2px)}
-.social-btn svg{width:16px;height:16px;fill:currentColor}
+.social-btn:hover{background:var(--glass2);border-color:var(--accent);transform:translateY(-2px);box-shadow:0 4px 20px var(--glow2)}
+.social-btn svg{width:15px;height:15px;fill:currentColor;flex-shrink:0}
 
-/* ─── Works Page ─────────────────────────────────────────────── */
-#works{background:var(--bg)}
-.works-intro{max-width:1200px;margin:0 auto;padding:80px clamp(20px,5vw,80px) 40px}
+/* ════ WORKS ════ */
+#works{background:transparent}
+.works-intro{padding-bottom:36px}
+
+/* Filter tabs */
+.filter-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-top:24px}
+.f-tab{
+  padding:7px 18px;border-radius:100px;font-size:.8rem;font-weight:500;
+  border:1px solid var(--border);background:var(--glass);backdrop-filter:blur(8px);
+  cursor:pointer;color:var(--text2);transition:all .25s;
+}
+.f-tab.active,.f-tab:hover{background:var(--glass2);border-color:var(--border2);color:var(--text);box-shadow:0 0 20px var(--glow2)}
+
 .works-grid{
-  display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));
-  gap:24px;max-width:1200px;margin:0 auto;
-  padding:0 clamp(20px,5vw,80px) 80px;
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
+  gap:22px;
 }
+
+/* ── GLASSMORPHISM WORK CARD ── */
 .work-card{
-  background:var(--bg2);border:1px solid var(--border);
-  border-radius:var(--radius);overflow:hidden;
-  transition:transform 0.35s,box-shadow 0.35s,border-color 0.35s;
-  cursor:none;
+  border-radius:var(--radius);overflow:hidden;cursor:pointer;
+  border:1px solid var(--border);
+  background:var(--glass);
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  transition:transform .4s cubic-bezier(.16,1,.3,1),box-shadow .4s,border-color .3s;
+  position:relative;
 }
-.work-card:hover{transform:translateY(-8px) scale(1.01);box-shadow:0 24px 60px var(--glow2);border-color:var(--accent)}
+/* glass shine */
+.work-card::before{
+  content:'';position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:linear-gradient(135deg,rgba(255,255,255,.07) 0%,transparent 50%,rgba(255,255,255,.02) 100%);
+  opacity:0;transition:opacity .3s;
+}
+.work-card:hover{
+  transform:translateY(-10px) scale(1.015);
+  box-shadow:0 28px 70px rgba(0,0,0,.5),0 0 0 1px var(--border2),inset 0 1px 0 rgba(255,255,255,.1);
+  border-color:var(--border2);
+}
+.work-card:hover::before{opacity:1}
+
+/* Photo thumbnail */
 .work-thumb{
-  height:220px;
-  position:relative;overflow:hidden;
+  height:220px;overflow:hidden;position:relative;
 }
-.work-thumb-inner{
-  width:100%;height:100%;
-  display:flex;align-items:center;justify-content:center;
-  font-size:3rem;
-  transition:transform 0.5s;
+.work-thumb img{
+  width:100%;height:100%;object-fit:cover;
+  transition:transform .6s cubic-bezier(.16,1,.3,1),filter .4s;
+  filter:brightness(.9) saturate(.9);
 }
-.work-card:hover .work-thumb-inner{transform:scale(1.1)}
-.work-meta{padding:24px}
-.work-type{font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:8px}
-.work-name{font-family:'Clash Display',sans-serif;font-size:1.3rem;font-weight:700;margin-bottom:8px;letter-spacing:-0.02em}
-.work-desc{font-size:0.85rem;color:var(--text2);line-height:1.6;margin-bottom:16px}
-.work-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
-.tag{padding:4px 10px;border-radius:100px;font-size:0.72rem;background:var(--surface2);color:var(--text2);border:1px solid var(--border)}
-.work-link{
-  display:inline-flex;align-items:center;gap:6px;
-  font-size:0.82rem;color:var(--accent);font-weight:500;
+.work-card:hover .work-thumb img{transform:scale(1.08);filter:brightness(1) saturate(1.1)}
+.work-thumb-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to top, rgba(7,7,13,.9) 0%, rgba(7,7,13,.3) 50%, transparent 100%);
+}
+.work-thumb-badge{
+  position:absolute;top:12px;right:12px;z-index:2;
+  background:rgba(7,7,13,.7);backdrop-filter:blur(10px);
   border:1px solid var(--border);border-radius:100px;
-  padding:7px 14px;transition:background 0.2s,border-color 0.2s;
+  padding:4px 12px;font-size:.68rem;font-weight:600;letter-spacing:.06em;
+  color:var(--accent3);text-transform:uppercase;
 }
-.work-link:hover{background:var(--surface2);border-color:var(--accent)}
 
-/* ─── Why Website Page ───────────────────────────────────────── */
-#why{background:var(--bg)}
-.why-intro{max-width:1000px;margin:0 auto;padding:80px clamp(20px,5vw,80px) 40px}
+/* Glass meta panel */
+.work-meta{
+  padding:22px;
+  background:linear-gradient(to bottom, rgba(255,255,255,.04), rgba(255,255,255,.02));
+  border-top:1px solid var(--border);
+  position:relative;z-index:2;
+}
+.work-name{font-family:'Clash Display',sans-serif;font-size:1.2rem;font-weight:700;margin-bottom:7px;letter-spacing:-.02em}
+.work-desc{font-size:.83rem;color:var(--text2);line-height:1.6;margin-bottom:14px}
+.work-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.tag{
+  padding:3px 10px;border-radius:100px;font-size:.7rem;
+  background:rgba(167,139,250,.1);color:var(--accent3);
+  border:1px solid rgba(167,139,250,.2);
+}
+.work-footer{display:flex;align-items:center;justify-content:space-between}
+.work-link{
+  display:inline-flex;align-items:center;gap:5px;font-size:.8rem;color:var(--accent);font-weight:500;
+  border:1px solid rgba(167,139,250,.25);border-radius:100px;padding:7px 14px;
+  background:rgba(167,139,250,.08);backdrop-filter:blur(8px);
+  transition:background .2s,border-color .2s,transform .2s;
+}
+.work-link:hover{background:rgba(167,139,250,.16);border-color:var(--accent);transform:translateX(2px)}
+.work-stack{display:flex;gap:5px}
+.stack-dot{width:7px;height:7px;border-radius:50%}
+
+/* ════ WHY WEBSITE ════ */
+#why{background:transparent}
 .why-brief{
-  background:linear-gradient(135deg,var(--bg3),var(--bg2));
+  background:var(--glass);backdrop-filter:blur(16px);
   border:1px solid var(--border);border-radius:var(--radius);
-  padding:40px;margin-bottom:40px;
+  padding:34px;margin-bottom:40px;position:relative;overflow:hidden;
+}
+.why-brief::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(167,139,250,.06),transparent);pointer-events:none}
+.why-brief::after{content:'';position:absolute;top:-40%;right:-15%;width:280px;height:280px;border-radius:50%;background:var(--glow2);filter:blur(60px);pointer-events:none}
+.why-brief-text{font-size:.98rem;line-height:1.9;color:var(--text2);position:relative;z-index:1}
+.why-brief-text strong{color:var(--accent3)}
+.biz-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:16px;margin-top:0}
+.biz-card{
+  background:var(--glass);backdrop-filter:blur(14px);
+  border:1px solid var(--border);border-radius:var(--radius);padding:24px;
+  transition:transform .3s,border-color .3s,box-shadow .3s;
   position:relative;overflow:hidden;
 }
-.why-brief::before{
-  content:'';position:absolute;top:-50%;right:-20%;
-  width:300px;height:300px;border-radius:50%;
-  background:var(--glow2);filter:blur(60px);
-}
-.why-brief-text{font-size:1.05rem;line-height:1.9;color:var(--text2);position:relative}
-.why-brief-text strong{color:var(--accent3)}
-.biz-grid{
-  display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
-  gap:20px;max-width:1200px;margin:0 auto;
-  padding:0 clamp(20px,5vw,80px) 80px;
-}
-.biz-card{
-  background:var(--bg2);border:1px solid var(--border);
-  border-radius:var(--radius);padding:28px;
-  transition:transform 0.3s,border-color 0.3s,box-shadow 0.3s;
-}
-.biz-card:hover{transform:translateY(-5px);border-color:var(--accent);box-shadow:0 12px 40px var(--glow2)}
-.biz-icon{font-size:2rem;margin-bottom:14px}
-.biz-name{font-family:'Clash Display',sans-serif;font-size:1.15rem;font-weight:700;margin-bottom:6px;color:var(--accent3)}
-.biz-reason{font-size:0.85rem;color:var(--text2);line-height:1.65}
-.biz-need{
-  display:inline-block;margin-top:12px;
-  font-size:0.72rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;
-  color:var(--accent);border:1px solid var(--border);border-radius:100px;padding:4px 10px;
-}
+.biz-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--accent),transparent);opacity:0;transition:opacity .3s}
+.biz-card:hover{transform:translateY(-5px);border-color:var(--border2);box-shadow:0 12px 44px var(--glow2)}
+.biz-card:hover::before{opacity:1}
+.biz-icon{font-size:1.8rem;margin-bottom:11px}
+.biz-name{font-family:'Clash Display',sans-serif;font-size:1.05rem;font-weight:700;margin-bottom:6px;color:var(--accent3)}
+.biz-reason{font-size:.82rem;color:var(--text2);line-height:1.65}
+.biz-need{display:inline-block;margin-top:11px;font-size:.68rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);border:1px solid rgba(167,139,250,.25);border-radius:100px;padding:3px 9px;background:rgba(167,139,250,.08)}
 
-/* ─── Contact Page ───────────────────────────────────────────── */
-#contact{background:var(--bg)}
-.contact-wrap{max-width:1100px;margin:0 auto;padding:80px clamp(20px,5vw,80px)}
-.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start}
-.contact-info{display:flex;flex-direction:column;gap:16px}
+/* ════ CONTACT ════ */
+#contact{background:transparent}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:start}
+.contact-info{display:flex;flex-direction:column;gap:11px}
 .contact-card{
-  background:var(--bg2);border:1px solid var(--border);
-  border-radius:var(--radius-sm);padding:20px 24px;
-  display:flex;align-items:center;gap:16px;
-  transition:border-color 0.25s,transform 0.25s;
+  background:var(--glass);backdrop-filter:blur(14px);
+  border:1px solid var(--border);border-radius:var(--radius-sm);
+  padding:16px 20px;display:flex;align-items:center;gap:14px;cursor:pointer;
+  transition:border-color .25s,transform .25s,box-shadow .25s;
 }
-.contact-card:hover{border-color:var(--accent);transform:translateX(4px)}
-.contact-card .cc-icon{
-  width:44px;height:44px;border-radius:12px;
-  background:var(--surface2);display:flex;align-items:center;justify-content:center;
-  font-size:1.2rem;flex-shrink:0;
-}
-.contact-card .cc-label{font-size:0.72rem;color:var(--text2);letter-spacing:0.05em;text-transform:uppercase;font-weight:500;margin-bottom:3px}
-.contact-card .cc-val{font-size:0.95rem;font-weight:500;color:var(--text)}
+.contact-card:hover{border-color:var(--border2);transform:translateX(5px);box-shadow:0 4px 24px var(--glow2)}
+.cc-icon{width:40px;height:40px;border-radius:11px;background:var(--glass2);display:flex;align-items:center;justify-content:center;font-size:1.05rem;flex-shrink:0}
+.cc-label{font-size:.67rem;color:var(--text2);letter-spacing:.05em;text-transform:uppercase;font-weight:500;margin-bottom:2px}
+.cc-val{font-size:.9rem;font-weight:500;color:var(--text)}
 .contact-form{
-  background:var(--bg2);border:1px solid var(--border);
-  border-radius:var(--radius);padding:36px;
+  background:var(--glass);backdrop-filter:blur(18px);
+  border:1px solid var(--border);border-radius:var(--radius);padding:30px;
+  position:relative;overflow:hidden;
 }
-.form-title{font-family:'Clash Display',sans-serif;font-size:1.4rem;font-weight:700;margin-bottom:24px;letter-spacing:-0.02em}
-.form-group{margin-bottom:18px}
-.form-group label{display:block;font-size:0.8rem;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:var(--text2);margin-bottom:8px}
-.form-group input,.form-group textarea{
-  width:100%;background:var(--surface);border:1px solid var(--border);
-  border-radius:var(--radius-sm);padding:13px 16px;
-  color:var(--text);font-family:'Inter',sans-serif;font-size:0.95rem;
-  outline:none;transition:border-color 0.25s,background 0.25s;resize:none;
+.contact-form::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.05) 0%,transparent 60%);pointer-events:none}
+.form-title{font-family:'Clash Display',sans-serif;font-size:1.3rem;font-weight:700;margin-bottom:20px;letter-spacing:-.02em;position:relative;z-index:1}
+.form-group{margin-bottom:14px;position:relative;z-index:1}
+.form-group label{display:block;font-size:.74rem;font-weight:500;letter-spacing:.04em;text-transform:uppercase;color:var(--text2);margin-bottom:6px}
+.form-group input,.form-group textarea,.form-group select{
+  width:100%;background:rgba(255,255,255,.04);border:1px solid var(--border);
+  border-radius:var(--radius-sm);padding:11px 14px;color:var(--text);
+  font-family:'Inter',sans-serif;font-size:.9rem;outline:none;
+  transition:border-color .25s,background .25s,box-shadow .25s;resize:none;
+  backdrop-filter:blur(8px);
 }
-.form-group input:focus,.form-group textarea:focus{border-color:var(--accent);background:var(--surface2)}
-.form-group textarea{height:120px}
+.form-group input:focus,.form-group textarea:focus,.form-group select:focus{
+  border-color:var(--accent);background:rgba(167,139,250,.07);
+  box-shadow:0 0 0 3px rgba(167,139,250,.12);
+}
+.form-group textarea{height:105px}
+.form-group select option{background:#15152a}
 .submit-btn{
   width:100%;background:linear-gradient(135deg,var(--accent2),var(--accent));
-  color:#fff;border:none;padding:15px;border-radius:100px;
-  font-size:0.95rem;font-weight:600;cursor:none;
+  color:#fff;border:none;padding:13px;border-radius:100px;
+  font-size:.92rem;font-weight:600;cursor:pointer;
   box-shadow:0 0 30px var(--glow);
-  transition:transform 0.2s,box-shadow 0.2s,opacity 0.2s;
-  letter-spacing:0.02em;
+  transition:transform .2s,box-shadow .2s;letter-spacing:.02em;
+  position:relative;z-index:1;
 }
-.submit-btn:hover{transform:translateY(-2px);box-shadow:0 0 50px var(--glow)}
+.submit-btn:hover{transform:translateY(-2px);box-shadow:0 0 48px var(--glow)}
+.submit-btn:disabled{opacity:.6;cursor:not-allowed;transform:none}
 
-/* ─── Footer ─────────────────────────────────────────────────── */
+/* ════ FOOTER ════ */
 footer{
   border-top:1px solid var(--border);
-  padding:32px clamp(20px,5vw,60px);
-  display:flex;align-items:center;justify-content:space-between;
-  flex-wrap:wrap;gap:16px;
+  padding:26px clamp(20px,5vw,60px);
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;
+  position:relative;z-index:1;
 }
-.footer-copy{font-size:0.8rem;color:var(--text2)}
-.footer-love{font-size:0.8rem;color:var(--text2)}
-.footer-love span{color:var(--pink)}
+.footer-copy{font-size:.78rem;color:var(--text2)}
+.footer-love{font-size:.78rem;color:var(--text2);display:flex;align-items:center;gap:4px}
+.footer-love .heart{color:var(--pink)}
+.admin-trigger{opacity:0;font-size:1px;user-select:none;width:16px;height:16px;display:inline-block;cursor:default}
 
-/* ─── Animations ─────────────────────────────────────────────── */
-.reveal{opacity:0;transform:translateY(30px);transition:opacity 0.7s cubic-bezier(0.16,1,0.3,1),transform 0.7s cubic-bezier(0.16,1,0.3,1)}
+/* ════ ADMIN OVERLAY ════ */
+#adminOverlay{
+  position:fixed;inset:0;z-index:99990;
+  background:rgba(0,0,0,.85);backdrop-filter:blur(14px);
+  display:none;align-items:center;justify-content:center;padding:20px;
+}
+#adminOverlay.open{display:flex}
+.admin-box{
+  background:rgba(14,14,24,.95);backdrop-filter:blur(24px);
+  border:1px solid var(--border);border-radius:var(--radius);
+  width:min(480px,100%);padding:34px;position:relative;
+  max-height:90vh;overflow-y:auto;animation:fade-up .35s ease both;
+}
+.admin-close{position:absolute;top:14px;right:14px;background:var(--glass2);border:none;color:var(--text2);width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:.9rem;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.admin-close:hover{background:var(--glass3);color:var(--text)}
+.admin-title{font-family:'Clash Display',sans-serif;font-size:1.4rem;font-weight:700;margin-bottom:5px}
+.admin-sub{font-size:.82rem;color:var(--text2);margin-bottom:20px}
+.admin-input{width:100%;background:var(--glass);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 15px;color:var(--text);font-family:'Inter',sans-serif;font-size:.9rem;outline:none;transition:border-color .25s;margin-bottom:10px}
+.admin-input:focus{border-color:var(--accent)}
+.admin-login-btn{width:100%;background:linear-gradient(135deg,var(--accent2),var(--accent));color:#fff;border:none;padding:12px;border-radius:100px;font-size:.9rem;font-weight:600;cursor:pointer;transition:opacity .2s}
+.admin-login-btn:hover{opacity:.9}
+.admin-err{font-size:.8rem;color:#f87171;margin-bottom:10px;display:none}
+.admin-err.show{display:block}
+.admin-header-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.admin-count{font-family:'Clash Display',sans-serif;font-size:1.3rem;font-weight:700}
+.count-badge{background:var(--accent2);color:#fff;font-size:.68rem;padding:2px 8px;border-radius:100px;font-weight:600;margin-left:7px}
+.admin-logout{background:var(--glass2);border:1px solid var(--border);color:var(--text2);padding:6px 13px;border-radius:100px;font-size:.76rem;cursor:pointer;transition:background .2s}
+.admin-logout:hover{background:var(--glass3)}
+.msg-list{display:flex;flex-direction:column;gap:11px}
+.msg-card{background:var(--glass);border:1px solid var(--border);border-radius:var(--radius-sm);padding:17px;position:relative}
+.msg-head{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:7px}
+.msg-name{font-weight:600;font-size:.92rem}
+.msg-time{font-size:.68rem;color:var(--text2);white-space:nowrap;margin-top:2px}
+.msg-email{font-size:.77rem;color:var(--accent);margin-bottom:3px}
+.msg-proj{font-size:.75rem;color:var(--text2);margin-bottom:6px}
+.msg-body{font-size:.85rem;line-height:1.6;color:var(--text)}
+.msg-del{position:absolute;top:10px;right:10px;background:rgba(248,113,113,.13);border:none;color:#f87171;width:24px;height:24px;border-radius:50%;cursor:pointer;font-size:.7rem;display:flex;align-items:center;justify-content:center;transition:background .2s}
+.msg-del:hover{background:rgba(248,113,113,.28)}
+.no-msgs{text-align:center;padding:34px 20px;color:var(--text2);font-size:.87rem;line-height:1.7}
+
+/* ════ SCREENSHOT GALLERY ════ */
+.ss-section{margin-top:72px;padding-top:60px;border-top:1px solid var(--border)}
+.ss-section-header{display:flex;align-items:flex-start;gap:20px;margin-bottom:52px}
+.ss-section-icon{width:52px;height:52px;border-radius:16px;flex-shrink:0;background:linear-gradient(135deg,var(--accent2),var(--accent));display:flex;align-items:center;justify-content:center;font-size:1.4rem;box-shadow:0 0 28px var(--glow)}
+.ss-section-title{font-family:'Clash Display',sans-serif;font-size:clamp(1.6rem,3.5vw,2.2rem);font-weight:700;letter-spacing:-.03em;margin-bottom:6px}
+.ss-section-sub{font-size:.9rem;color:var(--text2);line-height:1.65}
+.ss-project{margin-bottom:52px}
+.ss-project-label{display:inline-flex;align-items:center;gap:10px;font-family:'Clash Display',sans-serif;font-size:1.05rem;font-weight:700;margin-bottom:20px;padding:8px 18px 8px 12px;background:var(--glass);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:100px}
+.ss-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.ss-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.ss-card{border-radius:var(--radius-sm);overflow:hidden;background:var(--glass);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid var(--border);transition:transform .35s cubic-bezier(.16,1,.3,1),border-color .3s,box-shadow .3s;cursor:pointer}
+.ss-card:hover{transform:translateY(-6px) scale(1.02);border-color:var(--border2);box-shadow:0 18px 48px rgba(0,0,0,.5),0 0 0 1px var(--border2),inset 0 1px 0 rgba(255,255,255,.08)}
+.ss-img-wrap{position:relative;height:140px;overflow:hidden}
+.ss-img-wrap img{width:100%;height:100%;object-fit:cover;transition:transform .5s cubic-bezier(.16,1,.3,1),filter .4s;filter:brightness(.85) saturate(.85)}
+.ss-card:hover .ss-img-wrap img{transform:scale(1.07);filter:brightness(1) saturate(1.05)}
+.ss-img-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,transparent 50%,rgba(7,7,13,.7) 100%);display:flex;align-items:flex-end;justify-content:flex-end;padding:10px;opacity:0;transition:opacity .3s}
+.ss-card:hover .ss-img-overlay{opacity:1}
+.ss-expand{background:rgba(167,139,250,.2);backdrop-filter:blur(8px);border:1px solid rgba(167,139,250,.3);border-radius:100px;padding:3px 10px;font-size:.68rem;font-weight:500;color:var(--accent3)}
+.ss-label-row{display:flex;align-items:center;gap:6px;padding:10px 12px;background:linear-gradient(to bottom,rgba(255,255,255,.04),rgba(255,255,255,.02));border-top:1px solid var(--border);flex-wrap:wrap}
+.ss-page-icon{font-size:.88rem;flex-shrink:0}
+.ss-page-name{font-size:.78rem;font-weight:600;color:var(--text);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ss-page-pill{font-size:.64rem;font-weight:500;letter-spacing:.04em;background:rgba(167,139,250,.1);color:var(--accent3);border:1px solid rgba(167,139,250,.2);border-radius:100px;padding:2px 8px;white-space:nowrap;flex-shrink:0}
+
+/* LIGHTBOX */
+#lightbox{position:fixed;inset:0;z-index:99980;background:rgba(0,0,0,.92);backdrop-filter:blur(18px);display:none;align-items:center;justify-content:center;padding:24px}
+#lightbox.open{display:flex;animation:lb-in .25s ease}
+@keyframes lb-in{from{opacity:0}to{opacity:1}}
+.lb-inner{position:relative;max-width:1000px;width:100%;display:flex;flex-direction:column;align-items:center;gap:16px}
+#lbImg{width:100%;max-height:75vh;object-fit:contain;border-radius:var(--radius);border:1px solid var(--border2);box-shadow:0 32px 80px rgba(0,0,0,.6);animation:lb-scale .3s cubic-bezier(.16,1,.3,1)}
+@keyframes lb-scale{from{transform:scale(.92)}to{transform:scale(1)}}
+.lb-close{position:absolute;top:-14px;right:-14px;width:36px;height:36px;border-radius:50%;background:rgba(167,139,250,.15);backdrop-filter:blur(10px);border:1px solid var(--border2);color:var(--text);font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s,transform .2s;z-index:2}
+.lb-close:hover{background:rgba(167,139,250,.28);transform:scale(1.1)}
+.lb-nav{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;background:rgba(167,139,250,.12);backdrop-filter:blur(10px);border:1px solid var(--border2);color:var(--text);font-size:1.5rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s,transform .2s}
+.lb-nav:hover{background:rgba(167,139,250,.25);transform:translateY(-50%) scale(1.08)}
+.lb-prev{left:-60px}.lb-next{right:-60px}
+.lb-caption{background:var(--glass2);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:100px;padding:7px 20px;font-size:.82rem;color:var(--text2);display:flex;align-items:center;gap:8px}
+.lb-caption strong{color:var(--accent3)}
+
+/* ════ ANIMATED PARTICLES ════ */
+#particles-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.5}
+
+/* ════ FLOATING BADGE ANIMATION ════ */
+@keyframes float-badge{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+
+/* ════ REVEAL ════ */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1)}
 .reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-left{opacity:0;transform:translateX(-30px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1)}
+.reveal-left.visible{opacity:1;transform:translateX(0)}
 
-/* ─── Mobile ─────────────────────────────────────────────────── */
+/* ════ PAGE TRANSITION ════ */
+.pt{position:fixed;inset:0;background:var(--accent2);z-index:9990;pointer-events:none;clip-path:circle(0% at 50% 50%);transition:clip-path .5s cubic-bezier(.77,0,.175,1)}
+.pt.in{clip-path:circle(150% at 50% 50%)}
+.pt.out{clip-path:circle(0% at 50% 50%)}
+
+/* ════ RESPONSIVE ════ */
 @media(max-width:768px){
-  .about-grid{grid-template-columns:1fr}
-  .contact-grid{grid-template-columns:1fr}
-  .nav-links a:not(.active){display:none}
+  .nav-links{display:none}
   .hamburger{display:flex}
-  .hero-preview{gap:12px}
-  .preview-card{min-width:140px;padding:16px 18px}
-  .about-badge{bottom:-10px;right:-10px;padding:14px 18px}
+  .about-grid,.contact-grid{grid-template-columns:1fr}
+  .about-badge{bottom:-10px;right:-10px;padding:13px 16px}
+  .works-grid{grid-template-columns:1fr}
+  .ss-grid{grid-template-columns:repeat(2,1fr)}
+  .lb-prev{left:-16px}.lb-next{right:-16px}
+  .ss-section-header{flex-direction:column;gap:14px}
 }
-
-/* ─── Page transition ────────────────────────────────────────── */
-.page-transition{
-  position:fixed;inset:0;background:var(--accent2);z-index:9990;
-  pointer-events:none;
-  clip-path:circle(0% at 50% 50%);
-  transition:clip-path 0.5s cubic-bezier(0.77,0,0.175,1);
+@media(max-width:480px){
+  .ss-grid{grid-template-columns:repeat(2,1fr);gap:10px}
+  .ss-img-wrap{height:110px}
 }
-.page-transition.active{clip-path:circle(150% at 50% 50%)}
-.page-transition.out{clip-path:circle(0% at 50% 50%)}
+@media(max-width:480px){
+  .hero-title{font-size:2.4rem}
+  .biz-grid{grid-template-columns:1fr}
+}
 </style>
 </head>
 <body>
 
-<!-- Cursor -->
-<div id="cursor"></div>
-<div id="cursor-trail"></div>
-<div class="page-transition" id="pt"></div>
+<canvas id="particles-canvas"></canvas>
 
-<!-- Nav -->
-<nav id="mainNav">
-  <div class="nav-logo">Vishva.</div>
-  <div class="nav-links" id="navLinks">
-    <a href="#" class="active" onclick="navigate('home',this)">Home</a>
-    <a href="#" onclick="navigate('about',this)">About Me</a>
-    <a href="#" onclick="navigate('works',this)">Works</a>
-    <a href="#" onclick="navigate('why',this)">Why Website?</a>
-    <a href="#" onclick="navigate('contact',this)">Contact</a>
-    <button class="theme-toggle" id="themeBtn" title="Toggle theme">🌙</button>
+<!-- LOADER -->
+<div id="loader">
+  <div class="loader-logo">Vishva.</div>
+  <div class="loader-msg" id="lMsg">Premium Website Design</div>
+  <div class="loader-bar-track"><div class="loader-bar-fill" id="lBar"></div></div>
+  <div class="loader-dots"><span></span><span></span><span></span></div>
+</div>
+
+<div class="pt" id="pt"></div>
+
+<!-- ADMIN -->
+<div id="adminOverlay">
+  <div class="admin-box">
+    <button class="admin-close" onclick="closeAdmin()">✕</button>
+    <div id="aLogin">
+      <div class="admin-title">🔐 Admin Panel</div>
+      <div class="admin-sub">Enter password to view messages</div>
+      <div class="admin-err" id="aErr">Wrong password. Try again.</div>
+      <input class="admin-input" type="password" id="aPass" placeholder="Password" onkeydown="if(event.key==='Enter')doLogin()">
+      <button class="admin-login-btn" onclick="doLogin()">Access Messages →</button>
+    </div>
+    <div id="aMsgs" style="display:none">
+      <div class="admin-header-row">
+        <div class="admin-count">📬 Messages<span class="count-badge" id="aCnt">0</span></div>
+        <button class="admin-logout" onclick="doLogout()">Logout</button>
+      </div>
+      <div class="msg-list" id="aMsgList"></div>
+    </div>
   </div>
-  <button class="hamburger" id="hamburger" onclick="toggleMenu()">
-    <span></span><span></span><span></span>
-  </button>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo" id="navLogo">Vishva.</div>
+  <div class="nav-right">
+    <div class="nav-links" id="navLinks">
+      <a class="active" data-page="home">Home</a>
+      <a data-page="about">About Me</a>
+      <a data-page="works">Works</a>
+      <a data-page="why">Why Website?</a>
+      <a data-page="contact">Contact</a>
+    </div>
+    <button class="hamburger" id="hamBtn" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
 </nav>
 
-<!-- ════════════ HOME PAGE ════════════ -->
+<div class="mobile-menu" id="mobileMenu">
+  <a data-page="home">🏠 Home</a>
+  <a data-page="about">👤 About Me</a>
+  <a data-page="works">💼 Works</a>
+  <a data-page="why">💡 Why Website?</a>
+  <a data-page="contact">✉️ Contact</a>
+</div>
+
+<!-- ════ HOME ════ -->
 <div class="page active" id="home">
-  <div class="orb orb1"></div>
-  <div class="orb orb2"></div>
-  <div class="orb orb3"></div>
+  <div class="orb orb1"></div><div class="orb orb2"></div><div class="orb orb3"></div>
 
   <div class="avatar-wrap">
-    <div class="avatar-placeholder">V</div>
+    <img src="image/1.png" alt="Vishva">
     <div class="avatar-ring"></div>
   </div>
 
-  <div class="hero-tag">✦ Available for Freelance</div>
+  <div class="hero-tag">Available for Freelance</div>
   <h1 class="hero-title">Hi, I'm <span class="grad">Vishva</span></h1>
   <p class="hero-sub">I craft beautiful, functional websites that help businesses grow online — turning ideas into pixel-perfect digital experiences.</p>
 
   <div class="hero-btns">
-    <button class="btn-primary" onclick="navigate('works',document.querySelector('[onclick*=works]'))">View My Works</button>
-    <button class="btn-outline" onclick="navigate('contact',document.querySelector('[onclick*=contact]'))">Let's Talk →</button>
+    <button class="btn-primary" onclick="goTo('works')">View My Works</button>
+    <button class="btn-outline" onclick="goTo('contact')">Let's Talk →</button>
   </div>
 
   <div class="hero-preview">
-    <div class="preview-card">
+    <div class="preview-card" onclick="goTo('works')">
       <div class="pc-icon">🖥️</div>
       <div class="pc-label">Landing Page</div>
-      <div class="pc-val">Demo →</div>
-      <a class="pc-link" href="#" onclick="navigate('works',document.querySelector('[onclick*=works]'));return false">See Sample ↗</a>
+      <div class="pc-val">Demo</div>
+      <div class="pc-link">See Samples ↗</div>
     </div>
-    <div class="preview-card">
+    <div class="preview-card" onclick="goTo('works')">
       <div class="pc-icon">📄</div>
       <div class="pc-label">Static Page</div>
-      <div class="pc-val">Demo →</div>
-      <a class="pc-link" href="#" onclick="navigate('works',document.querySelector('[onclick*=works]'));return false">See Sample ↗</a>
+      <div class="pc-val">Demo</div>
+      <div class="pc-link">See Samples ↗</div>
     </div>
     <div class="preview-card">
       <div class="pc-icon">⚡</div>
-      <div class="pc-label">Skills</div>
+      <div class="pc-label">My Stack</div>
       <div class="pc-val">HTML · CSS · JS</div>
     </div>
   </div>
 </div>
 
-<!-- ════════════ ABOUT PAGE ════════════ -->
+<!-- ════ ABOUT ════ -->
 <div class="page" id="about">
-  <div class="section about-grid">
-    <div class="about-img-wrap reveal">
-      <div class="about-img-placeholder">
-        <div class="pi-icon">📸</div>
-        <span>Replace with your photo</span>
-        <small style="opacity:0.5;font-size:0.72rem">vishva-photo.jpg</small>
+  <div class="sec-wrap">
+    <div class="about-grid">
+      <div class="about-img-wrap reveal-left">
+        <img class="about-img"
+          src="image/2.png"
+          alt="Vishva – Web Designer">
+        <div class="about-badge" style="animation:float-badge 4s ease-in-out infinite">
+          <div class="ab-num">2+</div>
+          <div class="ab-txt">Years designing</div>
+        </div>
       </div>
-      <div class="about-badge">
-        <div class="ab-num">2+</div>
-        <div class="ab-txt">Years designing</div>
+      <div class="about-content reveal">
+        <div class="section-label">About Me</div>
+        <h2 class="section-title">Designing <span style="color:var(--accent)">web experiences</span> that matter</h2>
+        <p class="about-bio">I'm Vishva, a freelance web designer from India, passionate about creating clean, modern websites that look stunning and help businesses connect with their audience.</p>
+        <p class="about-bio">I specialise in landing pages and static websites with smooth interactions and thoughtful design. Every project starts with understanding your brand.</p>
+        <div class="skills-wrap">
+          <div class="skills-label">My Toolkit</div>
+          <div class="skill-chips">
+            <div class="chip"><span class="dot" style="background:#e34f26"></span>HTML5</div>
+            <div class="chip"><span class="dot" style="background:#1572b6"></span>CSS3</div>
+            <div class="chip"><span class="dot" style="background:#f7df1e"></span>JavaScript</div>
+            <div class="chip"><span class="dot" style="background:#a78bfa"></span>Responsive Design</div>
+            <div class="chip"><span class="dot" style="background:#f472b6"></span>UI Animations</div>
+            <div class="chip"><span class="dot" style="background:#67e8f9"></span>Landing Pages</div>
+            <div class="chip"><span class="dot" style="background:#34d399"></span>Static Websites</div>
+          </div>
+        </div>
+        <div class="about-social">
+          <a class="social-btn" href="https://instagram.com/your_username" target="_blank">
+            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            Instagram
+          </a>
+          <a class="social-btn" href="https://wa.me/91XXXXXXXXXX" target="_blank">
+            <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+            WhatsApp
+          </a>
+        </div>
       </div>
     </div>
-    <div class="about-content reveal">
-      <div class="section-label">About Me</div>
-      <h2 class="section-title">Designing <span style="color:var(--accent)">web experiences</span> that matter</h2>
-      <p class="about-bio">I'm Vishva, a freelance web designer based in India, passionate about creating clean, modern websites that not only look stunning but also help businesses connect with their audience. I specialise in crafting landing pages and static websites with smooth interactions and thoughtful design.</p>
-      <p class="about-bio" style="margin-top:-12px">Every project I take on starts with understanding your brand and ends with a website your customers remember.</p>
+  </div>
+</div>
 
-      <div class="skills-wrap">
-        <div class="skills-label">My Toolkit</div>
-        <div class="skill-chips">
-          <div class="chip"><span class="dot" style="background:#e34f26"></span>HTML5</div>
-          <div class="chip"><span class="dot" style="background:#1572b6"></span>CSS3</div>
-          <div class="chip"><span class="dot" style="background:#f7df1e"></span>JavaScript</div>
-          <div class="chip"><span class="dot" style="background:#7c3aed"></span>Responsive Design</div>
-          <div class="chip"><span class="dot" style="background:#f472b6"></span>UI Animations</div>
-          <div class="chip"><span class="dot" style="background:#67e8f9"></span>Landing Pages</div>
-          <div class="chip"><span class="dot" style="background:#34d399"></span>Static Websites</div>
+<!-- ════ WORKS ════ -->
+<div class="page" id="works">
+  <div class="sec-wrap">
+    <div class="works-intro reveal">
+      <div class="section-label">My Portfolio</div>
+      <h2 class="section-title">Work I'm <span style="color:var(--accent)">proud of</span></h2>
+      <p class="section-sub">Real project screenshots — landing pages & static websites built with HTML, CSS & JS.</p>
+      <div class="filter-tabs">
+        <div class="f-tab active" data-filter="all">All Projects</div>
+        <div class="f-tab" data-filter="landing">Landing Pages</div>
+        <div class="f-tab" data-filter="static">Static Websites</div>
+      </div>
+    </div>
+
+    <div class="works-grid" id="worksGrid">
+
+      <!-- Card 1 — Furniture -->
+      <div class="work-card reveal" data-type="landing">
+        <div class="work-thumb">
+          <img src="https://campus.vitracircle.com/cdn/shop/collections/5807452_Vitra_Campus_Factory_Sale_2021_57__master.jpg?v=1699964962" alt="Furniture Shop Website" loading="lazy">
+          <div class="work-thumb-overlay"></div>
+          <div class="work-thumb-badge">Landing Page</div>
+        </div>
+        <div class="work-meta">
+          <div class="work-name">Sivasakthi Marketing</div>
+          <div class="work-desc">Premium furniture brand with smooth scroll animations, product showcase and enquiry form.</div>
+          <div class="work-tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JS</span></div>
+          <div class="work-footer">
+            <a class="work-link" href="https://sivasakthimarketing.github.io/Vishva/">View Live ↗</a>
+            <div class="work-stack">
+              <div class="stack-dot" style="background:#e34f26" title="HTML"></div>
+              <div class="stack-dot" style="background:#1572b6" title="CSS"></div>
+              <div class="stack-dot" style="background:#f7df1e" title="JS"></div>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div class="about-social">
-        <a class="social-btn" href="https://instagram.com/your_username" target="_blank">
-          <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-          Instagram
-        </a>
-        <a class="social-btn" href="https://wa.me/91XXXXXXXXXX" target="_blank">
-          <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-          WhatsApp
-        </a>
+      <!-- Card 2 — Café -->
+      <!-- <div class="work-card reveal" data-type="static">
+        <div class="work-thumb">
+          <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=600&q=80&fit=crop" alt="Cafe Website" loading="lazy">
+          <div class="work-thumb-overlay"></div>
+          <div class="work-thumb-badge">Static Website</div>
+        </div>
+        <div class="work-meta">
+          <div class="work-name">Brewcraft Café</div>
+          <div class="work-desc">Cosy café website with menu, gallery and reservation CTA — fast and beautiful.</div>
+          <div class="work-tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JS</span></div>
+          <div class="work-footer">
+            <a class="work-link" href="#">View Live ↗</a>
+            <div class="work-stack">
+              <div class="stack-dot" style="background:#e34f26"></div>
+              <div class="stack-dot" style="background:#1572b6"></div>
+              <div class="stack-dot" style="background:#f7df1e"></div>
+            </div>
+          </div>
+        </div>
+      </div> -->
+
+      <!-- Card 3 — Studio -->
+      <div class="work-card reveal" data-type="landing">
+        <div class="work-thumb">
+          <img src="https://images.unsplash.com/photo-1727451139462-cd34008cd50b?q=80&w=1025&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Creative Studio Website" loading="lazy">
+          <div class="work-thumb-overlay"></div>
+          <div class="work-thumb-badge">Landing Page</div>
+        </div>
+        <div class="work-meta">
+          <div class="work-name">Vishva Studio</div>
+          <div class="work-desc">Bold studio portfolio with animation, services section and client testimonials.</div>
+          <div class="work-tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">Animations</span></div>
+          <div class="work-footer">
+            <a class="work-link" href="https://vetrivishva.github.io/studio/">View Live ↗</a>
+            <div class="work-stack">
+              <div class="stack-dot" style="background:#e34f26"></div>
+              <div class="stack-dot" style="background:#1572b6"></div>
+              <div class="stack-dot" style="background:#f472b6"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 4 — School -->
+      <div class="work-card reveal" data-type="static">
+        <div class="work-thumb">
+          <img src="https://cdn.swadeshonline.com/v2/patient-paper-41f385/swad-p/wrkr/company/default/applications/default/meta-field/assets/original/BN9NU24wb-IMG20231214151643.jpg" alt="School Website" loading="lazy">
+          <div class="work-thumb-overlay"></div>
+          <div class="work-thumb-badge">Static Website</div>
+        </div>
+        <div class="work-meta">
+          <div class="work-name">Sivasakthi Marketing</div>
+          <div class="work-desc">The website brings you a premium range of household products</div>
+          <div class="work-tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JS</span></div>
+          <div class="work-footer">
+            <a class="work-link" href="https://vishva-0628.github.io/Test/">View Live ↗</a>
+            <div class="work-stack">
+              <div class="stack-dot" style="background:#e34f26"></div>
+              <div class="stack-dot" style="background:#1572b6"></div>
+              <div class="stack-dot" style="background:#f7df1e"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 5 — Gym -->
+      <!-- <div class="work-card reveal" data-type="landing">
+        <div class="work-thumb">
+          <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80&fit=crop" alt="Gym Website" loading="lazy">
+          <div class="work-thumb-overlay"></div>
+          <div class="work-thumb-badge">Landing Page</div>
+        </div>
+        <div class="work-meta">
+          <div class="work-name">FitCore Gym</div>
+          <div class="work-desc">High-energy gym page with membership pricing, class schedule and trainer spotlight.</div>
+          <div class="work-tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JS</span></div>
+          <div class="work-footer">
+            <a class="work-link" href="#">View Live ↗</a>
+            <div class="work-stack">
+              <div class="stack-dot" style="background:#e34f26"></div>
+              <div class="stack-dot" style="background:#1572b6"></div>
+              <div class="stack-dot" style="background:#34d399"></div>
+            </div>
+          </div>
+        </div>
+      </div> -->
+
+      <!-- Card 6 — Clinic -->
+      <!-- <div class="work-card reveal" data-type="static">
+        <div class="work-thumb">
+          <img src="https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?w=600&q=80&fit=crop" alt="Clinic Website" loading="lazy">
+          <div class="work-thumb-overlay"></div>
+          <div class="work-thumb-badge">Static Website</div>
+        </div>
+        <div class="work-meta">
+          <div class="work-name">MediCare Clinic</div>
+          <div class="work-desc">Professional clinic site with doctor profiles, services and appointment booking form.</div>
+          <div class="work-tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">Static</span></div>
+          <div class="work-footer">
+            <a class="work-link" href="#">View Live ↗</a>
+            <div class="work-stack">
+              <div class="stack-dot" style="background:#e34f26"></div>
+              <div class="stack-dot" style="background:#1572b6"></div>
+              <div class="stack-dot" style="background:#67e8f9"></div>
+            </div>
+          </div>
+        </div>
+      </div> -->
+
+      <!-- Card 7 — Salon -->
+      <!-- <div class="work-card reveal" data-type="landing">
+        <div class="work-thumb">
+          <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?w=600&q=80&fit=crop" alt="Salon Website" loading="lazy">
+          <div class="work-thumb-overlay"></div>
+          <div class="work-thumb-badge">Landing Page</div>
+        </div>
+        <div class="work-meta">
+          <div class="work-name">Glam Salon & Spa</div>
+          <div class="work-desc">Elegant salon landing page with service menu, before-after gallery and booking CTA.</div>
+          <div class="work-tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JS</span></div>
+          <div class="work-footer">
+            <a class="work-link" href="#">View Live ↗</a>
+            <div class="work-stack">
+              <div class="stack-dot" style="background:#e34f26"></div>
+              <div class="stack-dot" style="background:#1572b6"></div>
+              <div class="stack-dot" style="background:#f472b6"></div>
+            </div>
+          </div>
+        </div>
+      </div> -->
+
+      <!-- Card 8 — Restaurant -->
+      <!-- <div class="work-card reveal" data-type="static">
+        <div class="work-thumb">
+          <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80&fit=crop" alt="Restaurant Website" loading="lazy">
+          <div class="work-thumb-overlay"></div>
+          <div class="work-thumb-badge">Static Website</div>
+        </div>
+        <div class="work-meta">
+          <div class="work-name">Spice Route Restaurant</div>
+          <div class="work-desc">Rich restaurant website with animated menu, chef profiles, and reservation system.</div>
+          <div class="work-tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">Static</span></div>
+          <div class="work-footer">
+            <a class="work-link" href="#">View Live ↗</a>
+            <div class="work-stack">
+              <div class="stack-dot" style="background:#e34f26"></div>
+              <div class="stack-dot" style="background:#1572b6"></div>
+              <div class="stack-dot" style="background:#f7df1e"></div>
+            </div>
+          </div>
+        </div>
+      </div> -->
+
+      <!-- Card 9 — Real Estate -->
+      <!-- <div class="work-card reveal" data-type="landing">
+        <div class="work-thumb">
+          <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=600&q=80&fit=crop" alt="Real Estate Website" loading="lazy">
+          <div class="work-thumb-overlay"></div>
+          <div class="work-thumb-badge">Landing Page</div>
+        </div>
+        <div class="work-meta">
+          <div class="work-name">NestFinder Realty</div>
+          <div class="work-desc">Modern real estate landing page with property listings, map integration and lead form.</div>
+          <div class="work-tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JS</span></div>
+          <div class="work-footer">
+            <a class="work-link" href="#">View Live ↗</a>
+            <div class="work-stack">
+              <div class="stack-dot" style="background:#e34f26"></div>
+              <div class="stack-dot" style="background:#1572b6"></div>
+              <div class="stack-dot" style="background:#67e8f9"></div>
+            </div>
+          </div>
+        </div>
+      </div> -->
+
+    </div><!-- /works-grid -->
+
+    <!-- ══════════════════════════════════════
+         SCREENSHOT GALLERY SECTION
+    ══════════════════════════════════════ -->
+    <div class="ss-section reveal">
+      <div class="ss-section-header">
+        <div class="ss-section-icon">🖥️</div>
+        <div>
+          <div class="section-label" style="margin-bottom:4px">Website Previews</div>
+          <h3 class="ss-section-title">Screenshots of the Website</h3>
+          <p class="ss-section-sub">A closer look at each page — exactly how the website appears to visitors.</p>
+        </div>
+      </div>
+
+      <!-- ── Sivasakthi Marketing ── -->
+      <div class="ss-project reveal">
+        <div class="ss-project-label">
+          <span class="ss-dot" style="background:linear-gradient(135deg,#a78bfa,#f472b6)"></span>
+          Sivasakthi Marketing
+        </div>
+        <div class="ss-grid">
+          <div class="ss-card">
+            <div class="ss-img-wrap">
+              <img src="image/view/1.png" alt="Home Page" loading="lazy">
+              <div class="ss-img-overlay">
+                <span class="ss-expand">⤢ View</span>
+              </div>
+            </div>
+            <div class="ss-label-row">
+              <!-- <span class="ss-page-icon">🏠</span>
+              <span class="ss-page-name">Home Page</span> -->
+              <span class="ss-page-pill">Products</span>
+            </div>
+          </div>
+          <div class="ss-card">
+            <div class="ss-img-wrap">
+              <img src="https://images.unsplash.com/photo-1538688525198-9b88f6f53126?w=700&q=85&fit=crop" alt="Products Page" loading="lazy">
+              <div class="ss-img-overlay"><span class="ss-expand">⤢ View</span></div>
+            </div>
+            <div class="ss-label-row">
+              <span class="ss-page-icon">🛋️</span>
+              <span class="ss-page-name">Products Page</span>
+              <span class="ss-page-pill">Catalogue</span>
+            </div>
+          </div>
+          <div class="ss-card">
+            <div class="ss-img-wrap">
+              <img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=700&q=85&fit=crop" alt="About Us" loading="lazy">
+              <div class="ss-img-overlay"><span class="ss-expand">⤢ View</span></div>
+            </div>
+            <div class="ss-label-row">
+              <span class="ss-page-icon">✉️</span>
+              <span class="ss-page-name">Enquiry Form</span>
+              <span class="ss-page-pill">Contact</span>
+            </div>
+          </div>
+          <div class="ss-card">
+            <div class="ss-img-wrap">
+              <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=700&q=85&fit=crop" alt="Stock Section" loading="lazy">
+              <div class="ss-img-overlay"><span class="ss-expand">⤢ View</span></div>
+            </div>
+            <div class="ss-label-row">
+              <span class="ss-page-icon">📦</span>
+              <span class="ss-page-name">Stock Section</span>
+              <span class="ss-page-pill">Inventory</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Brewcraft Café ── -->
+      <div class="ss-project reveal">
+        <div class="ss-project-label">
+          <span class="ss-dot" style="background:linear-gradient(135deg,#f59e0b,#f472b6)"></span>
+          Brewcraft Café
+        </div>
+        <div class="ss-grid">
+          <div class="ss-card">
+            <div class="ss-img-wrap">
+              <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=700&q=85&fit=crop" alt="Home Page" loading="lazy">
+              <div class="ss-img-overlay"><span class="ss-expand">⤢ View</span></div>
+            </div>
+            <div class="ss-label-row">
+              <span class="ss-page-icon">🏠</span>
+              <span class="ss-page-name">Home Page</span>
+              <span class="ss-page-pill">Landing</span>
+            </div>
+          </div>
+          <div class="ss-card">
+            <div class="ss-img-wrap">
+              <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=700&q=85&fit=crop" alt="Menu Page" loading="lazy">
+              <div class="ss-img-overlay"><span class="ss-expand">⤢ View</span></div>
+            </div>
+            <div class="ss-label-row">
+              <span class="ss-page-icon">📋</span>
+              <span class="ss-page-name">Menu Page</span>
+              <span class="ss-page-pill">Drinks & Food</span>
+            </div>
+          </div>
+          <div class="ss-card">
+            <div class="ss-img-wrap">
+              <img src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=700&q=85&fit=crop" alt="Gallery" loading="lazy">
+              <div class="ss-img-overlay"><span class="ss-expand">⤢ View</span></div>
+            </div>
+            <div class="ss-label-row">
+              <span class="ss-page-icon">🖼️</span>
+              <span class="ss-page-name">Gallery</span>
+              <span class="ss-page-pill">Ambiance</span>
+            </div>
+          </div>
+          <div class="ss-card">
+            <div class="ss-img-wrap">
+              <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=700&q=85&fit=crop" alt="Reservation" loading="lazy">
+              <div class="ss-img-overlay"><span class="ss-expand">⤢ View</span></div>
+            </div>
+            <div class="ss-label-row">
+              <span class="ss-page-icon">📅</span>
+              <span class="ss-page-name">Reservation</span>
+              <span class="ss-page-pill">Booking</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Aura Creative Studio ── -->
+      <div class="ss-project reveal">
+        <div class="ss-project-label">
+          <span class="ss-dot" style="background:linear-gradient(135deg,#f472b6,#a78bfa)"></span>
+          Aura Creative Studio
+        </div>
+        <div class="ss-grid">
+          <div class="ss-card">
+            <div class="ss-img-wrap">
+              <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=700&q=85&fit=crop" alt="Home Page" loading="lazy">
+              <div class="ss-img-overlay"><span class="ss-expand">⤢ View</span></div>
+            </div>
+            <div class="ss-label-row">
+              <span class="ss-page-icon">🏠</span>
+              <span class="ss-page-name">Home Page</span>
+              <span class="ss-page-pill">Hero</span>
+            </div>
+          </div>
+          <div class="ss-card">
+            <div class="ss-img-wrap">
+              <img src="https://images.unsplash.com/photo-1542744094-24638eff58bb?w=700&q=85&fit=crop" alt="Portfolio" loading="lazy">
+              <div class="ss-img-overlay"><span class="ss-expand">⤢ View</span></div>
+            </div>
+            <div class="ss-label-row">
+              <span class="ss-page-icon">🎨</span>
+              <span class="ss-page-name">Portfolio</span>
+              <span class="ss-page-pill">Works</span>
+            </div>
+          </div>
+          <div class="ss-card">
+            <div class="ss-img-wrap">
+              <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=700&q=85&fit=crop" alt="Admin Panel" loading="lazy">
+              <div class="ss-img-overlay"><span class="ss-expand">⤢ View</span></div>
+            </div>
+            <div class="ss-label-row">
+              <span class="ss-page-icon">🔐</span>
+              <span class="ss-page-name">Admin Panel</span>
+              <span class="ss-page-pill">Dashboard</span>
+            </div>
+          </div>
+          <div class="ss-card">
+            <div class="ss-img-wrap">
+              <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=700&q=85&fit=crop" alt="Services" loading="lazy">
+              <div class="ss-img-overlay"><span class="ss-expand">⤢ View</span></div>
+            </div>
+            <div class="ss-label-row">
+              <span class="ss-page-icon">⚙️</span>
+              <span class="ss-page-name">Services</span>
+              <span class="ss-page-pill">Offerings</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── BrightPath Academy ── -->
+      <div class="ss-project reveal">
+        <div class="ss-project-label">
+          <span class="ss-dot" style="background:linear-gradient(135deg,#67e8f9,#a78bfa)"></span>
+          BrightPath Academy
+        </div>
+        <div class="ss-grid">
+          <div class="ss-card">
+            <div class="ss-img-wrap">
+              <img src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=700&q=85&fit=crop" alt="Home Page" loading="lazy">
+              <div class="ss-img-overlay"><span class="ss-expand">⤢ View</span></div>
+            </div>
+            <div class="ss-label-row">
+              <span class="ss-page-icon">🏠</span>
+              <span class="ss-page-name">Home Page</span>
+              <span class="ss-page-pill">Landing</span>
+            </div>
+          </div>
+          <div class="ss-card">
+            <div class="ss-img-wrap">
+              <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=700&q=85&fit=crop" alt="Courses" loading="lazy">
+              <div class="ss-img-overlay"><span class="ss-expand">⤢ View</span></div>
+            </div>
+            <div class="ss-label-row">
+              <span class="ss-page-icon">📚</span>
+              <span class="ss-page-name">Courses</span>
+              <span class="ss-page-pill">Programmes</span>
+            </div>
+          </div>
+          <div class="ss-card">
+            <div class="ss-img-wrap">
+              <img src="https://images.unsplash.com/photo-1544717305-2782549b5136?w=700&q=85&fit=crop" alt="Faculty" loading="lazy">
+              <div class="ss-img-overlay"><span class="ss-expand">⤢ View</span></div>
+            </div>
+            <div class="ss-label-row">
+              <span class="ss-page-icon">👩‍🏫</span>
+              <span class="ss-page-name">Faculty Page</span>
+              <span class="ss-page-pill">Teachers</span>
+            </div>
+          </div>
+          <div class="ss-card">
+            <div class="ss-img-wrap">
+              <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=700&q=85&fit=crop" alt="Admissions" loading="lazy">
+              <div class="ss-img-overlay"><span class="ss-expand">⤢ View</span></div>
+            </div>
+            <div class="ss-label-row">
+              <span class="ss-page-icon">📝</span>
+              <span class="ss-page-name">Admissions</span>
+              <span class="ss-page-pill">Enquiry</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── FitCore Gym ── -->
+      <div class="ss-project reveal">
+        <div class="ss-project-label">
+          <span class="ss-dot" style="background:linear-gradient(135deg,#34d399,#67e8f9)"></span>
+          FitCore Gym
+        </div>
+        <div class="ss-grid">
+          <div class="ss-card">
+            <div class="ss-img-wrap">
+              <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=700&q=85&fit=crop" alt="Home Page" loading="lazy">
+              <div class="ss-img-overlay"><span class="ss-expand">⤢ View</span></div>
+            </div>
+            <div class="ss-label-row">
+              <span class="ss-page-icon">🏠</span>
+              <span class="ss-page-name">Home Page</span>
+              <span class="ss-page-pill">Hero</span>
+            </div>
+          </div>
+          <div class="ss-card">
+            <div class="ss-img-wrap">
+              <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=700&q=85&fit=crop" alt="Membership Plans" loading="lazy">
+              <div class="ss-img-overlay"><span class="ss-expand">⤢ View</span></div>
+            </div>
+            <div class="ss-label-row">
+              <span class="ss-page-icon">💳</span>
+              <span class="ss-page-name">Membership Plans</span>
+              <span class="ss-page-pill">Pricing</span>
+            </div>
+          </div>
+          <div class="ss-card">
+            <div class="ss-img-wrap">
+              <img src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=700&q=85&fit=crop" alt="Class Schedule" loading="lazy">
+              <div class="ss-img-overlay"><span class="ss-expand">⤢ View</span></div>
+            </div>
+            <div class="ss-label-row">
+              <span class="ss-page-icon">📅</span>
+              <span class="ss-page-name">Class Schedule</span>
+              <span class="ss-page-pill">Timetable</span>
+            </div>
+          </div>
+          <div class="ss-card">
+            <div class="ss-img-wrap">
+              <img src="https://images.unsplash.com/photo-1597347316205-36f6c451902a?w=700&q=85&fit=crop" alt="Trainers" loading="lazy">
+              <div class="ss-img-overlay"><span class="ss-expand">⤢ View</span></div>
+            </div>
+            <div class="ss-label-row">
+              <span class="ss-page-icon">🏋️</span>
+              <span class="ss-page-name">Our Trainers</span>
+              <span class="ss-page-pill">Team</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── MediCare Clinic ── -->
+      <div class="ss-project reveal">
+        <div class="ss-project-label">
+          <span class="ss-dot" style="background:linear-gradient(135deg,#67e8f9,#34d399)"></span>
+          MediCare Clinic
+        </div>
+        <div class="ss-grid">
+          <div class="ss-card">
+            <div class="ss-img-wrap">
+              <img src="https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?w=700&q=85&fit=crop" alt="Home Page" loading="lazy">
+              <div class="ss-img-overlay"><span class="ss-expand">⤢ View</span></div>
+            </div>
+            <div class="ss-label-row">
+              <span class="ss-page-icon">🏠</span>
+              <span class="ss-page-name">Home Page</span>
+              <span class="ss-page-pill">Landing</span>
+            </div>
+          </div>
+          <div class="ss-card">
+            <div class="ss-img-wrap">
+              <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=700&q=85&fit=crop" alt="Doctors" loading="lazy">
+              <div class="ss-img-overlay"><span class="ss-expand">⤢ View</span></div>
+            </div>
+            <div class="ss-label-row">
+              <span class="ss-page-icon">👨‍⚕️</span>
+              <span class="ss-page-name">Doctors</span>
+              <span class="ss-page-pill">Profiles</span>
+            </div>
+          </div>
+          <div class="ss-card">
+            <div class="ss-img-wrap">
+              <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=700&q=85&fit=crop" alt="Services" loading="lazy">
+              <div class="ss-img-overlay"><span class="ss-expand">⤢ View</span></div>
+            </div>
+            <div class="ss-label-row">
+              <span class="ss-page-icon">💊</span>
+              <span class="ss-page-name">Services</span>
+              <span class="ss-page-pill">Treatments</span>
+            </div>
+          </div>
+          <div class="ss-card">
+            <div class="ss-img-wrap">
+              <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=700&q=85&fit=crop" alt="Admin Panel" loading="lazy">
+              <div class="ss-img-overlay"><span class="ss-expand">⤢ View</span></div>
+            </div>
+            <div class="ss-label-row">
+              <span class="ss-page-icon">🔐</span>
+              <span class="ss-page-name">Admin Panel</span>
+              <span class="ss-page-pill">Dashboard</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Glam Salon ── -->
+      <div class="ss-project reveal">
+        <div class="ss-project-label">
+          <span class="ss-dot" style="background:linear-gradient(135deg,#f472b6,#f59e0b)"></span>
+          Glam Salon & Spa
+        </div>
+        <div class="ss-grid">
+          <div class="ss-card">
+            <div class="ss-img-wrap">
+              <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?w=700&q=85&fit=crop" alt="Home Page" loading="lazy">
+              <div class="ss-img-overlay"><span class="ss-expand">⤢ View</span></div>
+            </div>
+            <div class="ss-label-row">
+              <span class="ss-page-icon">🏠</span>
+              <span class="ss-page-name">Home Page</span>
+              <span class="ss-page-pill">Landing</span>
+            </div>
+          </div>
+          <div class="ss-card">
+            <div class="ss-img-wrap">
+              <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=700&q=85&fit=crop" alt="Services" loading="lazy">
+              <div class="ss-img-overlay"><span class="ss-expand">⤢ View</span></div>
+            </div>
+            <div class="ss-label-row">
+              <span class="ss-page-icon">✂️</span>
+              <span class="ss-page-name">Services</span>
+              <span class="ss-page-pill">Menu</span>
+            </div>
+          </div>
+          <div class="ss-card">
+            <div class="ss-img-wrap">
+              <img src="https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=700&q=85&fit=crop" alt="Gallery" loading="lazy">
+              <div class="ss-img-overlay"><span class="ss-expand">⤢ View</span></div>
+            </div>
+            <div class="ss-label-row">
+              <span class="ss-page-icon">🖼️</span>
+              <span class="ss-page-name">Gallery</span>
+              <span class="ss-page-pill">Before & After</span>
+            </div>
+          </div>
+          <div class="ss-card">
+            <div class="ss-img-wrap">
+              <img src="https://images.unsplash.com/photo-1600334129128-685c5582fd35?w=700&q=85&fit=crop" alt="Booking" loading="lazy">
+              <div class="ss-img-overlay"><span class="ss-expand">⤢ View</span></div>
+            </div>
+            <div class="ss-label-row">
+              <span class="ss-page-icon">📅</span>
+              <span class="ss-page-name">Booking Page</span>
+              <span class="ss-page-pill">Appointment</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Spice Route Restaurant ── -->
+      <div class="ss-project reveal">
+        <div class="ss-project-label">
+          <span class="ss-dot" style="background:linear-gradient(135deg,#f59e0b,#ef4444)"></span>
+          Spice Route Restaurant
+        </div>
+        <div class="ss-grid">
+          <div class="ss-card">
+            <div class="ss-img-wrap">
+              <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=700&q=85&fit=crop" alt="Home Page" loading="lazy">
+              <div class="ss-img-overlay"><span class="ss-expand">⤢ View</span></div>
+            </div>
+            <div class="ss-label-row">
+              <span class="ss-page-icon">🏠</span>
+              <span class="ss-page-name">Home Page</span>
+              <span class="ss-page-pill">Landing</span>
+            </div>
+          </div>
+          <div class="ss-card">
+            <div class="ss-img-wrap">
+              <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=700&q=85&fit=crop" alt="Menu" loading="lazy">
+              <div class="ss-img-overlay"><span class="ss-expand">⤢ View</span></div>
+            </div>
+            <div class="ss-label-row">
+              <span class="ss-page-icon">🍽️</span>
+              <span class="ss-page-name">Food Menu</span>
+              <span class="ss-page-pill">Dishes</span>
+            </div>
+          </div>
+          <div class="ss-card">
+            <div class="ss-img-wrap">
+              <img src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=700&q=85&fit=crop" alt="Chefs" loading="lazy">
+              <div class="ss-img-overlay"><span class="ss-expand">⤢ View</span></div>
+            </div>
+            <div class="ss-label-row">
+              <span class="ss-page-icon">👨‍🍳</span>
+              <span class="ss-page-name">Chef Profiles</span>
+              <span class="ss-page-pill">Our Team</span>
+            </div>
+          </div>
+          <div class="ss-card">
+            <div class="ss-img-wrap">
+              <img src="https://images.unsplash.com/photo-1592861956120-e524fc739696?w=700&q=85&fit=crop" alt="Reservation" loading="lazy">
+              <div class="ss-img-overlay"><span class="ss-expand">⤢ View</span></div>
+            </div>
+            <div class="ss-label-row">
+              <span class="ss-page-icon">📅</span>
+              <span class="ss-page-name">Reservation</span>
+              <span class="ss-page-pill">Table Booking</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── NestFinder Realty ── -->
+      <div class="ss-project reveal">
+        <div class="ss-project-label">
+          <span class="ss-dot" style="background:linear-gradient(135deg,#67e8f9,#a78bfa)"></span>
+          NestFinder Realty
+        </div>
+        <div class="ss-grid">
+          <div class="ss-card">
+            <div class="ss-img-wrap">
+              <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=700&q=85&fit=crop" alt="Home Page" loading="lazy">
+              <div class="ss-img-overlay"><span class="ss-expand">⤢ View</span></div>
+            </div>
+            <div class="ss-label-row">
+              <span class="ss-page-icon">🏠</span>
+              <span class="ss-page-name">Home Page</span>
+              <span class="ss-page-pill">Landing</span>
+            </div>
+          </div>
+          <div class="ss-card">
+            <div class="ss-img-wrap">
+              <img src="https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=700&q=85&fit=crop" alt="Listings" loading="lazy">
+              <div class="ss-img-overlay"><span class="ss-expand">⤢ View</span></div>
+            </div>
+            <div class="ss-label-row">
+              <span class="ss-page-icon">🏘️</span>
+              <span class="ss-page-name">Property Listings</span>
+              <span class="ss-page-pill">Browse</span>
+            </div>
+          </div>
+          <div class="ss-card">
+            <div class="ss-img-wrap">
+              <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=700&q=85&fit=crop" alt="Property Detail" loading="lazy">
+              <div class="ss-img-overlay"><span class="ss-expand">⤢ View</span></div>
+            </div>
+            <div class="ss-label-row">
+              <span class="ss-page-icon">🔍</span>
+              <span class="ss-page-name">Property Detail</span>
+              <span class="ss-page-pill">Single View</span>
+            </div>
+          </div>
+          <div class="ss-card">
+            <div class="ss-img-wrap">
+              <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=700&q=85&fit=crop" alt="Admin Panel" loading="lazy">
+              <div class="ss-img-overlay"><span class="ss-expand">⤢ View</span></div>
+            </div>
+            <div class="ss-label-row">
+              <span class="ss-page-icon">🔐</span>
+              <span class="ss-page-name">Admin Panel</span>
+              <span class="ss-page-pill">Dashboard</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /ss-section -->
+
+    <!-- LIGHTBOX -->
+    <div id="lightbox" onclick="closeLB()">
+      <div class="lb-inner" onclick="event.stopPropagation()">
+        <button class="lb-close" onclick="closeLB()">✕</button>
+        <button class="lb-nav lb-prev" onclick="shiftLB(-1)">‹</button>
+        <img id="lbImg" src="" alt="">
+        <button class="lb-nav lb-next" onclick="shiftLB(1)">›</button>
+        <div class="lb-caption" id="lbCaption"></div>
       </div>
     </div>
+
   </div>
 </div>
 
-<!-- ════════════ WORKS PAGE ════════════ -->
-<div class="page" id="works">
-  <div class="works-intro">
-    <div class="section-label reveal">My Portfolio</div>
-    <h2 class="section-title reveal">Work I'm <span style="color:var(--accent)">proud of</span></h2>
-    <p class="section-sub reveal">A curated selection of landing pages and static websites built with HTML, CSS & JavaScript.</p>
-  </div>
-
-  <div class="works-grid">
-    <div class="work-card reveal">
-      <div class="work-thumb" style="background:linear-gradient(135deg,#1a1030,#2d1b69)">
-        <div class="work-thumb-inner">🛋️</div>
-      </div>
-      <div class="work-meta">
-        <div class="work-type">Landing Page</div>
-        <div class="work-name">LuxeHome Furniture</div>
-        <div class="work-desc">A premium furniture brand landing page with smooth scroll animations, product showcase and enquiry form.</div>
-        <div class="work-tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JS</span><span class="tag">Landing Page</span></div>
-        <a class="work-link" href="#">View Live ↗</a>
-      </div>
-    </div>
-
-    <div class="work-card reveal">
-      <div class="work-thumb" style="background:linear-gradient(135deg,#0f1a12,#1a3a20)">
-        <div class="work-thumb-inner">☕</div>
-      </div>
-      <div class="work-meta">
-        <div class="work-type">Static Website</div>
-        <div class="work-name">Brewcraft Café</div>
-        <div class="work-desc">A cosy café website with menu, ambiance gallery and reservation CTA — all static, fast and beautiful.</div>
-        <div class="work-tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JS</span><span class="tag">Static</span></div>
-        <a class="work-link" href="#">View Live ↗</a>
-      </div>
-    </div>
-
-    <div class="work-card reveal">
-      <div class="work-thumb" style="background:linear-gradient(135deg,#1a0f1a,#3a1040)">
-        <div class="work-thumb-inner">🎨</div>
-      </div>
-      <div class="work-meta">
-        <div class="work-type">Landing Page</div>
-        <div class="work-name">Aura Creative Studio</div>
-        <div class="work-desc">Bold studio portfolio landing page featuring animated hero, services section and client testimonials.</div>
-        <div class="work-tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">Animations</span></div>
-        <a class="work-link" href="#">View Live ↗</a>
-      </div>
-    </div>
-
-    <div class="work-card reveal">
-      <div class="work-thumb" style="background:linear-gradient(135deg,#0a1a2a,#0d2a4a)">
-        <div class="work-thumb-inner">🎓</div>
-      </div>
-      <div class="work-meta">
-        <div class="work-type">Static Website</div>
-        <div class="work-name">BrightPath Academy</div>
-        <div class="work-desc">A clean and accessible school website with course listings, faculty profiles and enquiry form.</div>
-        <div class="work-tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JS</span><span class="tag">Static</span></div>
-        <a class="work-link" href="#">View Live ↗</a>
-      </div>
-    </div>
-
-    <div class="work-card reveal">
-      <div class="work-thumb" style="background:linear-gradient(135deg,#1a1200,#2a2000)">
-        <div class="work-thumb-inner">🏋️</div>
-      </div>
-      <div class="work-meta">
-        <div class="work-type">Landing Page</div>
-        <div class="work-name">FitCore Gym</div>
-        <div class="work-desc">A high-energy gym landing page with membership pricing, class schedule and trainer spotlight.</div>
-        <div class="work-tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">Landing Page</span></div>
-        <a class="work-link" href="#">View Live ↗</a>
-      </div>
-    </div>
-
-    <div class="work-card reveal">
-      <div class="work-thumb" style="background:linear-gradient(135deg,#001a1a,#003333)">
-        <div class="work-thumb-inner">🏥</div>
-      </div>
-      <div class="work-meta">
-        <div class="work-type">Static Website</div>
-        <div class="work-name">MediCare Clinic</div>
-        <div class="work-desc">A professional clinic static site with doctor profiles, services and appointment booking form.</div>
-        <div class="work-tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">Static</span></div>
-        <a class="work-link" href="#">View Live ↗</a>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ════════════ WHY WEBSITE PAGE ════════════ -->
+<!-- ════ WHY WEBSITE ════ -->
 <div class="page" id="why">
-  <div class="why-intro">
-    <div class="section-label reveal">The Reason</div>
-    <h2 class="section-title reveal">Why does your business <span style="color:var(--accent)">need a website?</span></h2>
-
+  <div class="sec-wrap">
+    <div class="reveal">
+      <div class="section-label">The Reason</div>
+      <h2 class="section-title">Why does your business <span style="color:var(--accent)">need a website?</span></h2>
+    </div>
     <div class="why-brief reveal">
-      <p class="why-brief-text">In today's digital world, <strong>your website is your 24/7 salesperson</strong>. Unlike social media, your website is a space you fully own — no algorithm, no limits. A well-designed website builds <strong>credibility, trust, and visibility</strong>. It tells potential customers exactly who you are, what you offer, and why they should choose you. Whether you're a small shop or a growing business, <strong>not having a website means losing customers to competitors who do</strong>. A website opens doors to new customers, new markets, and new revenue — even while you sleep.</p>
+      <p class="why-brief-text">In today's digital world, <strong>your website is your 24/7 salesperson</strong>. Unlike social media, your website is a space you fully own — no algorithm, no limits. A well-designed website builds <strong>credibility, trust, and visibility</strong>. It tells potential customers exactly who you are, what you offer, and why they should choose you. Whether you're a small shop or a growing business, <strong>not having a website means losing customers to competitors who do</strong>.</p>
     </div>
-  </div>
-
-  <div class="biz-grid">
-    <div class="biz-card reveal">
-      <div class="biz-icon">🛋️</div>
-      <div class="biz-name">Furniture Shops</div>
-      <div class="biz-reason">Customers browse furniture online before visiting stores. A website showcasing your collection, pricing and location turns browsers into buyers.</div>
-      <span class="biz-need">Needs a website</span>
-    </div>
-    <div class="biz-card reveal">
-      <div class="biz-icon">🎨</div>
-      <div class="biz-name">Creative Studios</div>
-      <div class="biz-reason">Your portfolio is your pitch. A stunning website showcases your work 24/7 and attracts clients who are actively searching for creative talent.</div>
-      <span class="biz-need">Needs a website</span>
-    </div>
-    <div class="biz-card reveal">
-      <div class="biz-icon">☕</div>
-      <div class="biz-name">Cafés & Restaurants</div>
-      <div class="biz-reason">People search "café near me" every day. A website with your menu, photos and location puts you on the map and drives foot traffic.</div>
-      <span class="biz-need">Needs a website</span>
-    </div>
-    <div class="biz-card reveal">
-      <div class="biz-icon">🎓</div>
-      <div class="biz-name">Schools & Colleges</div>
-      <div class="biz-reason">Parents and students research institutions online first. A clear website with courses, fees and testimonials builds confidence and drives admissions.</div>
-      <span class="biz-need">Needs a website</span>
-    </div>
-    <div class="biz-card reveal">
-      <div class="biz-icon">🏋️</div>
-      <div class="biz-name">Gyms & Fitness</div>
-      <div class="biz-reason">Fitness seekers compare gyms online. A website with membership plans, trainer profiles and class schedules converts curious visitors into paying members.</div>
-      <span class="biz-need">Needs a website</span>
-    </div>
-    <div class="biz-card reveal">
-      <div class="biz-icon">🏥</div>
-      <div class="biz-name">Clinics & Doctors</div>
-      <div class="biz-reason">Trust is everything in healthcare. A professional website with doctor credentials, services and easy appointment booking brings new patients to your door.</div>
-      <span class="biz-need">Needs a website</span>
-    </div>
-    <div class="biz-card reveal">
-      <div class="biz-icon">💇</div>
-      <div class="biz-name">Salons & Spas</div>
-      <div class="biz-reason">Customers discover salons via search. A website with service menus, pricing and before-after galleries makes them choose you over competitors.</div>
-      <span class="biz-need">Needs a website</span>
-    </div>
-    <div class="biz-card reveal">
-      <div class="biz-icon">🏗️</div>
-      <div class="biz-name">Contractors & Builders</div>
-      <div class="biz-reason">People need proof before hiring. A website with your past projects, client reviews and contact form turns enquiries into signed contracts.</div>
-      <span class="biz-need">Needs a website</span>
-    </div>
-    <div class="biz-card reveal">
-      <div class="biz-icon">🛒</div>
-      <div class="biz-name">Retail Shops</div>
-      <div class="biz-reason">Even if you're not selling online, a website gives customers product info, shop timings and directions — reducing missed opportunities.</div>
-      <span class="biz-need">Needs a website</span>
+    <div class="biz-grid">
+      <div class="biz-card reveal"><div class="biz-icon">🛋️</div><div class="biz-name">Furniture Shops</div><div class="biz-reason">Customers browse furniture online before visiting. A website showcasing your collection and pricing turns browsers into buyers.</div><span class="biz-need">Needs a website</span></div>
+      <div class="biz-card reveal"><div class="biz-icon">🎨</div><div class="biz-name">Creative Studios</div><div class="biz-reason">Your portfolio is your pitch. A stunning website showcases your work 24/7 and attracts clients searching for creative talent.</div><span class="biz-need">Needs a website</span></div>
+      <div class="biz-card reveal"><div class="biz-icon">☕</div><div class="biz-name">Cafés & Restaurants</div><div class="biz-reason">People search "café near me" every day. A website with your menu, photos and location drives real foot traffic.</div><span class="biz-need">Needs a website</span></div>
+      <div class="biz-card reveal"><div class="biz-icon">🎓</div><div class="biz-name">Schools & Colleges</div><div class="biz-reason">Parents and students research institutions first online. A clear website with courses and fees drives admissions.</div><span class="biz-need">Needs a website</span></div>
+      <div class="biz-card reveal"><div class="biz-icon">🏋️</div><div class="biz-name">Gyms & Fitness</div><div class="biz-reason">Fitness seekers compare gyms online. Membership plans and class schedules convert visitors into members.</div><span class="biz-need">Needs a website</span></div>
+      <div class="biz-card reveal"><div class="biz-icon">🏥</div><div class="biz-name">Clinics & Doctors</div><div class="biz-reason">Trust is everything in healthcare. A professional website with credentials and booking forms brings new patients.</div><span class="biz-need">Needs a website</span></div>
+      <div class="biz-card reveal"><div class="biz-icon">💇</div><div class="biz-name">Salons & Spas</div><div class="biz-reason">Customers discover salons via search. Service menus and before-after galleries make them choose you.</div><span class="biz-need">Needs a website</span></div>
+      <div class="biz-card reveal"><div class="biz-icon">🏗️</div><div class="biz-name">Contractors & Builders</div><div class="biz-reason">People need proof before hiring. Past projects and reviews turn enquiries into signed contracts.</div><span class="biz-need">Needs a website</span></div>
+      <div class="biz-card reveal"><div class="biz-icon">🛒</div><div class="biz-name">Retail Shops</div><div class="biz-reason">Even offline shops benefit — product info, timings and directions reduce missed opportunities daily.</div><span class="biz-need">Needs a website</span></div>
     </div>
   </div>
 </div>
 
-<!-- ════════════ CONTACT PAGE ════════════ -->
+<!-- ════ CONTACT ════ -->
 <div class="page" id="contact">
-  <div class="contact-wrap">
-    <div class="section-label reveal">Get In Touch</div>
-    <h2 class="section-title reveal">Let's build something <span style="color:var(--accent)">great together</span></h2>
-    <p class="section-sub reveal" style="margin-bottom:48px">Have a project in mind? Fill the form or reach out directly — I'd love to hear about your vision.</p>
-
+  <div class="sec-wrap">
+    <div class="reveal" style="margin-bottom:40px">
+      <div class="section-label">Get In Touch</div>
+      <h2 class="section-title">Let's build something <span style="color:var(--accent)">great together</span></h2>
+      <p class="section-sub">Have a project in mind? Fill the form or reach out directly.</p>
+    </div>
     <div class="contact-grid">
       <div class="contact-info reveal">
-        <a class="contact-card" href="mailto:vishva@email.com">
-          <div class="cc-icon">📧</div>
-          <div><div class="cc-label">Email</div><div class="cc-val">vishva@email.com</div></div>
-        </a>
-        <a class="contact-card" href="https://wa.me/91XXXXXXXXXX" target="_blank">
-          <div class="cc-icon">💬</div>
-          <div><div class="cc-label">WhatsApp</div><div class="cc-val">+91 XXXXX XXXXX</div></div>
-        </a>
-        <a class="contact-card" href="https://instagram.com/your_username" target="_blank">
-          <div class="cc-icon">📸</div>
-          <div><div class="cc-label">Instagram</div><div class="cc-val">@your_username</div></div>
-        </a>
-        <div class="contact-card">
-          <div class="cc-icon">📍</div>
-          <div><div class="cc-label">Location</div><div class="cc-val">India · Remote Worldwide</div></div>
-        </div>
-        <div class="contact-card">
-          <div class="cc-icon">⏱️</div>
-          <div><div class="cc-label">Response Time</div><div class="cc-val">Within 24 hours</div></div>
-        </div>
+        <a class="contact-card" href="mailto:vishva@email.com"><div class="cc-icon">📧</div><div><div class="cc-label">Email</div><div class="cc-val">vishva@email.com</div></div></a>
+        <a class="contact-card" href="https://wa.me/91XXXXXXXXXX" target="_blank"><div class="cc-icon">💬</div><div><div class="cc-label">WhatsApp</div><div class="cc-val">+91 XXXXX XXXXX</div></div></a>
+        <a class="contact-card" href="https://instagram.com/your_username" target="_blank"><div class="cc-icon">📸</div><div><div class="cc-label">Instagram</div><div class="cc-val">@your_username</div></div></a>
+        <div class="contact-card"><div class="cc-icon">📍</div><div><div class="cc-label">Location</div><div class="cc-val">India · Remote Worldwide</div></div></div>
+        <div class="contact-card"><div class="cc-icon">⏱️</div><div><div class="cc-label">Response Time</div><div class="cc-val">Within 24 hours</div></div></div>
       </div>
-
       <div class="contact-form reveal">
         <div class="form-title">Send a message</div>
-        <div class="form-group">
-          <label>Your Name</label>
-          <input type="text" placeholder="e.g. Arjun Kumar">
+        <div class="form-group"><label>Your Name *</label><input type="text" id="fName" placeholder="e.g. Arjun Kumar"></div>
+        <div class="form-group"><label>Email Address *</label><input type="email" id="fEmail" placeholder="you@example.com"></div>
+        <div class="form-group"><label>Project Type</label>
+          <select id="fProject"><option value="">Select project type</option><option>Landing Page</option><option>Static Website</option><option>Both</option><option>Other</option></select>
         </div>
-        <div class="form-group">
-          <label>Email Address</label>
-          <input type="email" placeholder="you@example.com">
-        </div>
-        <div class="form-group">
-          <label>Project Type</label>
-          <input type="text" placeholder="Landing Page / Static Website">
-        </div>
-        <div class="form-group">
-          <label>Message</label>
-          <textarea placeholder="Tell me about your project…"></textarea>
-        </div>
-        <button class="submit-btn" onclick="handleSubmit()">Send Message ✦</button>
+        <div class="form-group"><label>Message *</label><textarea id="fMsg" placeholder="Tell me about your project…"></textarea></div>
+        <button class="submit-btn" id="submitBtn" onclick="handleSubmit()">Send Message ✦</button>
       </div>
     </div>
   </div>
-
   <footer>
     <div class="footer-copy">© 2025 Vishva. All rights reserved.</div>
-    <div class="footer-love">Designed & built with <span>♥</span> by Vishva</div>
+    <div class="footer-love">Made with <span class="heart">♥</span> by Vishva
+      <span class="admin-trigger" id="adminTrigger"> </span>
+    </div>
   </footer>
 </div>
 
 <script>
-/* ── Cursor ─────────────────────────────────────── */
-const cursor=document.getElementById('cursor');
-const trail=document.getElementById('cursor-trail');
-document.addEventListener('mousemove',e=>{
-  cursor.style.left=e.clientX+'px';cursor.style.top=e.clientY+'px';
-  trail.style.left=e.clientX+'px';trail.style.top=e.clientY+'px';
-});
-document.querySelectorAll('a,button').forEach(el=>{
-  el.addEventListener('mouseenter',()=>{cursor.style.width='20px';cursor.style.height='20px';trail.style.width='60px';trail.style.height='60px'});
-  el.addEventListener('mouseleave',()=>{cursor.style.width='12px';cursor.style.height='12px';trail.style.width='40px';trail.style.height='40px'});
-});
+/* ════ PARTICLES ════ */
+(function(){
+  const c=document.getElementById('particles-canvas');
+  const ctx=c.getContext('2d');
+  let W,H,pts=[];
+  function resize(){W=c.width=innerWidth;H=c.height=innerHeight}
+  resize();window.addEventListener('resize',resize);
+  const N=55;
+  for(let i=0;i<N;i++)pts.push({
+    x:Math.random()*1920,y:Math.random()*1080,
+    vx:(Math.random()-.5)*.28,vy:(Math.random()-.5)*.28,
+    r:Math.random()*1.4+.4,
+    a:Math.random()*.5+.1
+  });
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    pts.forEach(p=>{
+      p.x+=p.vx;p.y+=p.vy;
+      if(p.x<0||p.x>W)p.vx*=-1;
+      if(p.y<0||p.y>H)p.vy*=-1;
+      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(167,139,250,${p.a})`;ctx.fill();
+    });
+    // Connect nearby
+    for(let i=0;i<pts.length;i++){
+      for(let j=i+1;j<pts.length;j++){
+        const dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y;
+        const d=Math.sqrt(dx*dx+dy*dy);
+        if(d<130){
+          ctx.beginPath();
+          ctx.moveTo(pts[i].x,pts[i].y);ctx.lineTo(pts[j].x,pts[j].y);
+          ctx.strokeStyle=`rgba(167,139,250,${.06*(1-d/130)})`;
+          ctx.lineWidth=.5;ctx.stroke();
+        }
+      }
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
 
-/* ── Theme Toggle ───────────────────────────────── */
-const html=document.documentElement;
-const themeBtn=document.getElementById('themeBtn');
-themeBtn.addEventListener('click',()=>{
-  const isDark=html.dataset.theme==='dark';
-  html.dataset.theme=isDark?'light':'dark';
-  themeBtn.textContent=isDark?'🌙':'☀️';
-});
+/* ════ LOADER ════ */
+const MSGS=['Premium Website Design...','At Affordable Cost...','Clean · Fast · Beautiful','Built with HTML · CSS · JS','Your Brand, Online ✦'];
+let mi=0;
+const lMsg=document.getElementById('lMsg'),lBar=document.getElementById('lBar');
+function cycleMsg(){lMsg.style.animation='none';lMsg.offsetHeight;lMsg.style.animation='fade-in-msg .45s ease both';lMsg.textContent=MSGS[mi%MSGS.length];mi++;}
+const msgT=setInterval(cycleMsg,700);
+let prog=0;const barT=setInterval(()=>{prog+=Math.random()*18;if(prog>=100){prog=100;clearInterval(barT);}lBar.style.width=prog+'%';},200);
+window.addEventListener('load',()=>{setTimeout(()=>{clearInterval(msgT);document.getElementById('loader').classList.add('hide');observeReveal();},2400);});
 
-/* ── Navigation ─────────────────────────────────── */
-let current='home';
-function navigate(id,link){
-  if(id===current)return;
+/* ════ NAV / PAGES ════ */
+let cur='home';
+function goTo(id){
+  if(id===cur)return;
   const pt=document.getElementById('pt');
-  pt.classList.add('active');
+  pt.classList.remove('out');pt.classList.add('in');
   setTimeout(()=>{
-    document.getElementById(current).classList.remove('active');
+    document.getElementById(cur).classList.remove('active');
     document.getElementById(id).classList.add('active');
-    current=id;
-    // Update nav active state
-    document.querySelectorAll('.nav-links a').forEach(a=>a.classList.remove('active'));
-    if(link)link.classList.add('active');
-    window.scrollTo(0,0);
-    pt.classList.remove('active');
-    pt.classList.add('out');
+    cur=id;syncNav();window.scrollTo(0,0);
+    pt.classList.remove('in');pt.classList.add('out');
     setTimeout(()=>pt.classList.remove('out'),500);
     observeReveal();
-  },250);
+  },240);
 }
+function syncNav(){document.querySelectorAll('[data-page]').forEach(a=>a.classList.toggle('active',a.dataset.page===cur));}
+document.querySelectorAll('[data-page]').forEach(a=>{a.addEventListener('click',()=>{goTo(a.dataset.page);closeMobileMenu();});});
+document.getElementById('navLogo').addEventListener('click',()=>goTo('home'));
 
-/* ── Hamburger ──────────────────────────────────── */
-function toggleMenu(){
-  const links=document.getElementById('navLinks');
-  links.style.display=links.style.display==='flex'?'none':'flex';
-}
+/* ── Hamburger ── */
+const hamBtn=document.getElementById('hamBtn'),mMenu=document.getElementById('mobileMenu');
+function closeMobileMenu(){mMenu.classList.remove('open');hamBtn.classList.remove('open');}
+hamBtn.addEventListener('click',e=>{e.stopPropagation();mMenu.classList.toggle('open');hamBtn.classList.toggle('open');});
+document.addEventListener('click',e=>{if(!mMenu.contains(e.target)&&!hamBtn.contains(e.target))closeMobileMenu();});
 
-/* ── Scroll Reveal ──────────────────────────────── */
-function observeReveal(){
-  const obs=new IntersectionObserver((entries)=>{
-    entries.forEach((e,i)=>{
-      if(e.isIntersecting){
-        setTimeout(()=>e.target.classList.add('visible'),i*80);
-        obs.unobserve(e.target);
+/* ════ FILTER TABS ════ */
+document.querySelectorAll('.f-tab').forEach(tab=>{
+  tab.addEventListener('click',()=>{
+    document.querySelectorAll('.f-tab').forEach(t=>t.classList.remove('active'));
+    tab.classList.add('active');
+    const f=tab.dataset.filter;
+    document.querySelectorAll('.work-card').forEach(card=>{
+      if(f==='all'||card.dataset.type===f){
+        card.style.display='';
+        setTimeout(()=>{card.style.opacity='1';card.style.transform='';},10);
+      }else{
+        card.style.opacity='0';
+        card.style.transform='scale(0.95)';
+        setTimeout(()=>card.style.display='none',300);
       }
     });
-  },{threshold:0.12});
-  document.querySelectorAll('.reveal').forEach(el=>{el.classList.remove('visible');obs.observe(el)});
-}
-observeReveal();
-
-/* ── Form Submit ────────────────────────────────── */
-function handleSubmit(){
-  const btn=document.querySelector('.submit-btn');
-  btn.textContent='Sending… ✦';btn.style.opacity='0.7';
-  setTimeout(()=>{btn.textContent='Sent! I\'ll reply soon ✓';btn.style.background='linear-gradient(135deg,#059669,#10b981)';},1400);
-}
-
-/* ── Staggered chip animation ───────────────────── */
-document.querySelectorAll('.chip').forEach((c,i)=>{
-  c.style.animationDelay=`${i*0.07}s`;
-  c.style.animation='fade-up 0.6s both';
+  });
 });
+
+/* ════ SCROLL REVEAL ════ */
+function observeReveal(){
+  const io=new IntersectionObserver((entries)=>{
+    entries.forEach((en,i)=>{if(en.isIntersecting){setTimeout(()=>en.target.classList.add('visible'),i*75);io.unobserve(en.target);}});
+  },{threshold:0.08});
+  document.querySelectorAll('.reveal,.reveal-left').forEach(el=>{el.classList.remove('visible');io.observe(el);});
+}
+
+/* ════ CONTACT → ADMIN ════ */
+const PASS='vishva@admin';const KEY='v_msgs';
+function getMsgs(){try{return JSON.parse(localStorage.getItem(KEY)||'[]');}catch{return[];}}
+function saveMsgs(m){localStorage.setItem(KEY,JSON.stringify(m));}
+function handleSubmit(){
+  const name=document.getElementById('fName').value.trim();
+  const email=document.getElementById('fEmail').value.trim();
+  const project=document.getElementById('fProject').value;
+  const msg=document.getElementById('fMsg').value.trim();
+  const btn=document.getElementById('submitBtn');
+  if(!name||!email||!msg){btn.textContent='⚠️ Fill required fields';btn.style.background='linear-gradient(135deg,#dc2626,#ef4444)';setTimeout(()=>{btn.textContent='Send Message ✦';btn.style.background='';},2200);return;}
+  btn.disabled=true;btn.textContent='Sending…';
+  getMsgs();const msgs=getMsgs();
+  msgs.unshift({id:Date.now(),name,email,project,message:msg,time:new Date().toLocaleString('en-IN',{dateStyle:'medium',timeStyle:'short'})});
+  saveMsgs(msgs);
+  setTimeout(()=>{
+    btn.textContent='Message Sent ✓';btn.style.background='linear-gradient(135deg,#059669,#10b981)';
+    ['fName','fEmail','fMsg'].forEach(id=>document.getElementById(id).value='');
+    document.getElementById('fProject').value='';
+    setTimeout(()=>{btn.disabled=false;btn.textContent='Send Message ✦';btn.style.background='';},3000);
+  },900);
+}
+
+/* ════ LIGHTBOX ════ */
+let lbImages=[], lbIdx=0;
+function buildLightboxData(){
+  lbImages=[];
+  document.querySelectorAll('.ss-card').forEach(card=>{
+    const img=card.querySelector('img');
+    const name=card.querySelector('.ss-page-name')?.textContent||'';
+    const pill=card.querySelector('.ss-page-pill')?.textContent||'';
+    const proj=card.closest('.ss-project')?.querySelector('.ss-project-label')?.textContent?.trim()||'';
+    lbImages.push({src:img.src, name, pill, proj});
+  });
+}
+function openLB(idx){
+  if(!lbImages.length)buildLightboxData();
+  lbIdx=idx;
+  renderLB();
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeLB(){
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow='';
+}
+function shiftLB(dir){
+  lbIdx=(lbIdx+dir+lbImages.length)%lbImages.length;
+  renderLB();
+}
+function renderLB(){
+  const d=lbImages[lbIdx];
+  const lbImg=document.getElementById('lbImg');
+  lbImg.style.animation='none';lbImg.offsetHeight;lbImg.style.animation='lb-scale .3s cubic-bezier(.16,1,.3,1)';
+  lbImg.src=d.src.replace('w=700','w=1200');
+  lbImg.alt=d.name;
+  document.getElementById('lbCaption').innerHTML=`<strong>${d.proj}</strong> · ${d.name} · <span style="color:var(--accent)">${d.pill}</span> · ${lbIdx+1}/${lbImages.length}`;
+}
+// Wire ss-cards click
+document.addEventListener('click',e=>{
+  const card=e.target.closest('.ss-card');
+  if(card){
+    if(!lbImages.length)buildLightboxData();
+    const cards=Array.from(document.querySelectorAll('.ss-card'));
+    openLB(cards.indexOf(card));
+  }
+});
+// Keyboard nav
+document.addEventListener('keydown',e=>{
+  if(!document.getElementById('lightbox').classList.contains('open'))return;
+  if(e.key==='ArrowRight')shiftLB(1);
+  if(e.key==='ArrowLeft')shiftLB(-1);
+  if(e.key==='Escape')closeLB();
+});
+
+function openAdmin(){document.getElementById('adminOverlay').classList.add('open');document.getElementById('aLogin').style.display='block';document.getElementById('aMsgs').style.display='none';document.getElementById('aPass').value='';document.getElementById('aErr').classList.remove('show');}
+function closeAdmin(){document.getElementById('adminOverlay').classList.remove('open');}
+function doLogin(){if(document.getElementById('aPass').value===PASS){document.getElementById('aLogin').style.display='none';document.getElementById('aMsgs').style.display='block';renderMsgs();}else{document.getElementById('aErr').classList.add('show');document.getElementById('aPass').value='';}}
+function doLogout(){document.getElementById('aLogin').style.display='block';document.getElementById('aMsgs').style.display='none';}
+function renderMsgs(){
+  const msgs=getMsgs();const list=document.getElementById('aMsgList');
+  document.getElementById('aCnt').textContent=msgs.length;list.innerHTML='';
+  if(!msgs.length){list.innerHTML='<div class="no-msgs">📭 No messages yet.<br>Messages will appear here once someone contacts you.</div>';return;}
+  msgs.forEach(m=>{const d=document.createElement('div');d.className='msg-card';d.innerHTML=`<button class="msg-del" onclick="delMsg(${m.id})">✕</button><div class="msg-head"><div class="msg-name">${X(m.name)}</div><div class="msg-time">${m.time}</div></div><div class="msg-email">${X(m.email)}</div>${m.project?`<div class="msg-proj">📌 ${X(m.project)}</div>`:''}<div class="msg-body">${X(m.message)}</div>`;list.appendChild(d);});
+}
+function delMsg(id){saveMsgs(getMsgs().filter(m=>m.id!==id));renderMsgs();}
+function X(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+document.getElementById('adminOverlay').addEventListener('click',function(e){if(e.target===this)closeAdmin();});
+document.getElementById('aPass').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
+// Triple-click logo to open admin
+let nc=0,nt;
+document.getElementById('navLogo').addEventListener('click',()=>{nc++;clearTimeout(nt);nt=setTimeout(()=>nc=0,600);if(nc>=3){nc=0;openAdmin();}});
+let fc=0,ft;
+document.getElementById('adminTrigger').addEventListener('click',()=>{fc++;clearTimeout(ft);ft=setTimeout(()=>fc=0,600);if(fc>=3){fc=0;openAdmin();}});
 </script>
 </body>
 </html>
