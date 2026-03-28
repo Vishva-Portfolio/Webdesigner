@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vishva — Web Designer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ─── CSS Variables ─────────────────────────────────────────── */
+:root {
+  --bg: #0a0a0f;
+  --bg2: #111118;
+  --bg3: #1a1a24;
+  --surface: rgba(255,255,255,0.04);
+  --surface2: rgba(255,255,255,0.08);
+  --border: rgba(255,255,255,0.08);
+  --text: #f0f0f8;
+  --text2: rgba(240,240,248,0.55);
+  --accent: #a78bfa;
+  --accent2: #7c3aed;
+  --accent3: #c4b5fd;
+  --glow: rgba(167,139,250,0.25);
+  --glow2: rgba(167,139,250,0.1);
+  --pink: #f472b6;
+  --cyan: #67e8f9;
+  --radius: 20px;
+  --radius-sm: 12px;
+  --nav-h: 70px;
+  --transition: 0.4s cubic-bezier(0.16,1,0.3,1);
+}
+[data-theme="light"] {
+  --bg: #f5f4ff;
+  --bg2: #ede9fe;
+  --bg3: #ddd6fe;
+  --surface: rgba(124,58,237,0.06);
+  --surface2: rgba(124,58,237,0.12);
+  --border: rgba(124,58,237,0.15);
+  --text: #1e1b3a;
+  --text2: rgba(30,27,58,0.55);
+  --accent: #7c3aed;
+  --accent2: #5b21b6;
+  --accent3: #a78bfa;
+  --glow: rgba(124,58,237,0.2);
+  --glow2: rgba(124,58,237,0.07);
+  --pink: #db2777;
+  --cyan: #0891b2;
+}
+
+/* ─── Reset & Base ──────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{
+  font-family:'Inter',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  overflow-x:hidden;
+  cursor:none;
+  transition:background var(--transition),color var(--transition);
+}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;border-radius:var(--radius)}
+::selection{background:var(--glow);color:var(--accent3)}
+
+/* ─── Custom Cursor ─────────────────────────────────────────── */
+#cursor{
+  position:fixed;width:12px;height:12px;border-radius:50%;
+  background:var(--accent);z-index:9999;pointer-events:none;
+  transform:translate(-50%,-50%);transition:transform 0.1s,width 0.3s,height 0.3s,opacity 0.3s;
+  mix-blend-mode:screen;
+}
+#cursor-trail{
+  position:fixed;width:40px;height:40px;border-radius:50%;
+  border:1.5px solid var(--accent);z-index:9998;pointer-events:none;
+  transform:translate(-50%,-50%);transition:left 0.18s ease,top 0.18s ease,width 0.3s,height 0.3s;
+  opacity:0.5;
+}
+body:hover #cursor{opacity:1}
+
+/* ─── Scrollbar ─────────────────────────────────────────────── */
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--accent2);border-radius:4px}
+
+/* ─── Navbar ────────────────────────────────────────────────── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  height:var(--nav-h);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 clamp(20px,5vw,60px);
+  background:rgba(10,10,15,0.7);
+  backdrop-filter:blur(20px) saturate(180%);
+  -webkit-backdrop-filter:blur(20px) saturate(180%);
+  border-bottom:1px solid var(--border);
+  transition:background var(--transition);
+}
+[data-theme="light"] nav{background:rgba(245,244,255,0.75)}
+.nav-logo{
+  font-family:'Clash Display',sans-serif;
+  font-size:1.5rem;font-weight:700;
+  background:linear-gradient(135deg,var(--accent3),var(--accent),var(--pink));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  letter-spacing:-0.02em;
+}
+.nav-links{display:flex;gap:8px;align-items:center}
+.nav-links a{
+  font-size:0.82rem;font-weight:500;letter-spacing:0.04em;
+  padding:7px 14px;border-radius:100px;
+  color:var(--text2);
+  transition:color 0.25s,background 0.25s;
+}
+.nav-links a:hover,.nav-links a.active{color:var(--text);background:var(--surface2)}
+.theme-toggle{
+  width:42px;height:42px;border-radius:50%;border:none;
+  background:var(--surface2);color:var(--text);cursor:none;
+  font-size:1.1rem;display:flex;align-items:center;justify-content:center;
+  transition:background 0.25s,transform 0.3s;margin-left:8px;
+}
+.theme-toggle:hover{background:var(--surface);transform:rotate(20deg)}
+.hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:none;padding:8px}
+.hamburger span{display:block;width:22px;height:2px;background:var(--text);border-radius:2px;transition:0.3s}
+
+/* ─── Pages ─────────────────────────────────────────────────── */
+.page{
+  min-height:100vh;padding-top:var(--nav-h);
+  display:none;opacity:0;transform:translateY(20px);
+  transition:opacity 0.5s ease,transform 0.5s ease;
+}
+.page.active{display:block;opacity:1;transform:translateY(0)}
+
+/* ─── Hero / Home ────────────────────────────────────────────── */
+#home{
+  display:none;
+  align-items:center;justify-content:center;
+  min-height:100vh;
+  background:
+    radial-gradient(ellipse 70% 60% at 80% 20%, rgba(167,139,250,0.12) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 10% 80%, rgba(244,114,182,0.08) 0%, transparent 50%),
+    var(--bg);
+  flex-direction:column;
+  text-align:center;
+  padding:100px clamp(20px,5vw,60px) 60px;
+  position:relative;overflow:hidden;
+}
+#home.active{display:flex}
+
+/* Floating orbs */
+.orb{
+  position:absolute;border-radius:50%;filter:blur(60px);
+  animation:float 8s ease-in-out infinite;pointer-events:none;
+}
+.orb1{width:400px;height:400px;background:rgba(167,139,250,0.08);top:-10%;right:-5%;animation-delay:0s}
+.orb2{width:300px;height:300px;background:rgba(244,114,182,0.06);bottom:10%;left:-5%;animation-delay:-4s}
+.orb3{width:200px;height:200px;background:rgba(103,232,249,0.05);top:40%;left:30%;animation-delay:-2s}
+@keyframes float{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-30px) scale(1.05)}}
+
+/* Avatar */
+.avatar-wrap{
+  position:relative;width:140px;height:140px;margin:0 auto 32px;
+  animation:avatar-in 1s cubic-bezier(0.16,1,0.3,1) both;
+}
+@keyframes avatar-in{from{opacity:0;transform:scale(0.7) translateY(20px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.avatar-wrap img,.avatar-placeholder{
+  width:140px;height:140px;border-radius:50%;
+  object-fit:cover;display:block;
+}
+.avatar-placeholder{
+  background:linear-gradient(135deg,var(--accent2),var(--pink));
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Clash Display',sans-serif;font-size:3rem;font-weight:700;color:#fff;
+}
+.avatar-ring{
+  position:absolute;inset:-6px;border-radius:50%;
+  background:conic-gradient(var(--accent),var(--pink),var(--cyan),var(--accent));
+  z-index:-1;animation:spin 4s linear infinite;
+  mask:radial-gradient(farthest-side,transparent calc(100% - 3px),black calc(100% - 3px));
+  -webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 3px),black calc(100% - 3px));
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.hero-tag{
+  display:inline-block;
+  background:var(--surface2);border:1px solid var(--border);
+  border-radius:100px;padding:6px 16px;
+  font-size:0.75rem;font-weight:500;letter-spacing:0.08em;
+  color:var(--accent3);text-transform:uppercase;
+  margin-bottom:20px;
+  animation:fade-up 0.8s 0.2s both;
+}
+.hero-title{
+  font-family:'Clash Display',sans-serif;
+  font-size:clamp(2.8rem,8vw,6rem);
+  font-weight:700;line-height:1.05;
+  letter-spacing:-0.03em;
+  animation:fade-up 0.8s 0.3s both;
+}
+.hero-title .grad{
+  background:linear-gradient(90deg,var(--accent3),var(--accent),var(--pink));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.hero-sub{
+  font-size:clamp(1rem,2.5vw,1.25rem);
+  color:var(--text2);max-width:560px;margin:20px auto 0;
+  font-weight:300;line-height:1.7;
+  animation:fade-up 0.8s 0.4s both;
+}
+@keyframes fade-up{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+
+.hero-btns{
+  display:flex;gap:12px;justify-content:center;flex-wrap:wrap;
+  margin-top:36px;animation:fade-up 0.8s 0.5s both;
+}
+.btn-primary{
+  background:linear-gradient(135deg,var(--accent2),var(--accent));
+  color:#fff;border:none;padding:14px 28px;border-radius:100px;
+  font-size:0.9rem;font-weight:600;cursor:none;letter-spacing:0.02em;
+  box-shadow:0 0 30px var(--glow);
+  transition:transform 0.2s,box-shadow 0.2s;
+}
+.btn-primary:hover{transform:translateY(-2px) scale(1.02);box-shadow:0 0 50px var(--glow)}
+.btn-outline{
+  background:var(--surface);border:1px solid var(--border);
+  color:var(--text);padding:14px 28px;border-radius:100px;
+  font-size:0.9rem;font-weight:500;cursor:none;
+  transition:background 0.25s,border-color 0.25s,transform 0.2s;
+}
+.btn-outline:hover{background:var(--surface2);border-color:var(--accent);transform:translateY(-2px)}
+
+/* Preview cards in hero */
+.hero-preview{
+  display:flex;gap:16px;justify-content:center;flex-wrap:wrap;
+  margin-top:60px;animation:fade-up 0.8s 0.65s both;
+}
+.preview-card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--radius);padding:20px 28px;
+  text-align:left;min-width:180px;
+  backdrop-filter:blur(10px);
+  transition:transform 0.3s,border-color 0.3s,box-shadow 0.3s;
+}
+.preview-card:hover{transform:translateY(-6px);border-color:var(--accent);box-shadow:0 16px 40px var(--glow2)}
+.preview-card .pc-icon{font-size:1.5rem;margin-bottom:10px}
+.preview-card .pc-label{font-size:0.75rem;color:var(--text2);margin-bottom:4px;letter-spacing:0.05em;text-transform:uppercase}
+.preview-card .pc-val{font-family:'Clash Display',sans-serif;font-size:1.4rem;font-weight:700;color:var(--accent3)}
+.preview-card .pc-link{
+  font-size:0.78rem;color:var(--accent);display:inline-flex;align-items:center;gap:4px;margin-top:8px;
+  border:1px solid var(--border);border-radius:100px;padding:4px 10px;
+  transition:background 0.2s;
+}
+.preview-card .pc-link:hover{background:var(--surface2)}
+
+/* ─── Section shared ──────────────────────────────────────────── */
+.section{padding:80px clamp(20px,5vw,80px)}
+.section-label{
+  font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--accent);font-weight:600;margin-bottom:12px;
+}
+.section-title{
+  font-family:'Clash Display',sans-serif;
+  font-size:clamp(2rem,5vw,3.5rem);font-weight:700;
+  line-height:1.1;letter-spacing:-0.03em;
+  margin-bottom:16px;
+}
+.section-sub{font-size:1rem;color:var(--text2);max-width:520px;line-height:1.7}
+.divider{height:1px;background:var(--border);margin:0 clamp(20px,5vw,80px)}
+
+/* ─── About Page ─────────────────────────────────────────────── */
+#about{background:var(--bg)}
+.about-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:60px;
+  align-items:start;max-width:1200px;margin:0 auto;
+}
+.about-img-wrap{position:relative}
+.about-img{
+  width:100%;aspect-ratio:4/5;object-fit:cover;
+  border-radius:var(--radius);
+}
+.about-img-placeholder{
+  width:100%;aspect-ratio:4/5;
+  background:linear-gradient(135deg,var(--bg3),var(--bg2));
+  border-radius:var(--radius);border:1px solid var(--border);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:12px;color:var(--text2);font-size:0.85rem;
+}
+.about-img-placeholder .pi-icon{font-size:3rem}
+.about-badge{
+  position:absolute;bottom:-16px;right:-16px;
+  background:linear-gradient(135deg,var(--accent2),var(--accent));
+  border-radius:var(--radius);padding:20px 24px;
+  box-shadow:0 8px 32px var(--glow);
+  animation:float 5s ease-in-out infinite;
+}
+.about-badge .ab-num{font-family:'Clash Display',sans-serif;font-size:2rem;font-weight:700;color:#fff}
+.about-badge .ab-txt{font-size:0.75rem;color:rgba(255,255,255,0.75);margin-top:2px}
+.about-content{padding-top:20px}
+.about-content .section-title{margin-bottom:20px}
+.about-bio{font-size:1.05rem;line-height:1.8;color:var(--text2);margin-bottom:28px}
+.skills-wrap{margin-bottom:32px}
+.skills-label{font-size:0.8rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--text2);margin-bottom:14px;font-weight:500}
+.skill-chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{
+  padding:7px 16px;border-radius:100px;font-size:0.8rem;font-weight:500;
+  border:1px solid var(--border);background:var(--surface);
+  display:flex;align-items:center;gap:6px;
+  transition:background 0.2s,border-color 0.2s,transform 0.2s;
+}
+.chip:hover{background:var(--surface2);border-color:var(--accent);transform:translateY(-2px)}
+.chip .dot{width:6px;height:6px;border-radius:50%;background:var(--accent)}
+.about-social{display:flex;gap:12px;flex-wrap:wrap}
+.social-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:11px 20px;border-radius:100px;
+  border:1px solid var(--border);background:var(--surface);
+  font-size:0.85rem;font-weight:500;
+  transition:all 0.25s;
+}
+.social-btn:hover{background:var(--surface2);border-color:var(--accent);transform:translateY(-2px)}
+.social-btn svg{width:16px;height:16px;fill:currentColor}
+
+/* ─── Works Page ─────────────────────────────────────────────── */
+#works{background:var(--bg)}
+.works-intro{max-width:1200px;margin:0 auto;padding:80px clamp(20px,5vw,80px) 40px}
+.works-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));
+  gap:24px;max-width:1200px;margin:0 auto;
+  padding:0 clamp(20px,5vw,80px) 80px;
+}
+.work-card{
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:var(--radius);overflow:hidden;
+  transition:transform 0.35s,box-shadow 0.35s,border-color 0.35s;
+  cursor:none;
+}
+.work-card:hover{transform:translateY(-8px) scale(1.01);box-shadow:0 24px 60px var(--glow2);border-color:var(--accent)}
+.work-thumb{
+  height:220px;
+  position:relative;overflow:hidden;
+}
+.work-thumb-inner{
+  width:100%;height:100%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:3rem;
+  transition:transform 0.5s;
+}
+.work-card:hover .work-thumb-inner{transform:scale(1.1)}
+.work-meta{padding:24px}
+.work-type{font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:8px}
+.work-name{font-family:'Clash Display',sans-serif;font-size:1.3rem;font-weight:700;margin-bottom:8px;letter-spacing:-0.02em}
+.work-desc{font-size:0.85rem;color:var(--text2);line-height:1.6;margin-bottom:16px}
+.work-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+.tag{padding:4px 10px;border-radius:100px;font-size:0.72rem;background:var(--surface2);color:var(--text2);border:1px solid var(--border)}
+.work-link{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:0.82rem;color:var(--accent);font-weight:500;
+  border:1px solid var(--border);border-radius:100px;
+  padding:7px 14px;transition:background 0.2s,border-color 0.2s;
+}
+.work-link:hover{background:var(--surface2);border-color:var(--accent)}
+
+/* ─── Why Website Page ───────────────────────────────────────── */
+#why{background:var(--bg)}
+.why-intro{max-width:1000px;margin:0 auto;padding:80px clamp(20px,5vw,80px) 40px}
+.why-brief{
+  background:linear-gradient(135deg,var(--bg3),var(--bg2));
+  border:1px solid var(--border);border-radius:var(--radius);
+  padding:40px;margin-bottom:40px;
+  position:relative;overflow:hidden;
+}
+.why-brief::before{
+  content:'';position:absolute;top:-50%;right:-20%;
+  width:300px;height:300px;border-radius:50%;
+  background:var(--glow2);filter:blur(60px);
+}
+.why-brief-text{font-size:1.05rem;line-height:1.9;color:var(--text2);position:relative}
+.why-brief-text strong{color:var(--accent3)}
+.biz-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:20px;max-width:1200px;margin:0 auto;
+  padding:0 clamp(20px,5vw,80px) 80px;
+}
+.biz-card{
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:var(--radius);padding:28px;
+  transition:transform 0.3s,border-color 0.3s,box-shadow 0.3s;
+}
+.biz-card:hover{transform:translateY(-5px);border-color:var(--accent);box-shadow:0 12px 40px var(--glow2)}
+.biz-icon{font-size:2rem;margin-bottom:14px}
+.biz-name{font-family:'Clash Display',sans-serif;font-size:1.15rem;font-weight:700;margin-bottom:6px;color:var(--accent3)}
+.biz-reason{font-size:0.85rem;color:var(--text2);line-height:1.65}
+.biz-need{
+  display:inline-block;margin-top:12px;
+  font-size:0.72rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;
+  color:var(--accent);border:1px solid var(--border);border-radius:100px;padding:4px 10px;
+}
+
+/* ─── Contact Page ───────────────────────────────────────────── */
+#contact{background:var(--bg)}
+.contact-wrap{max-width:1100px;margin:0 auto;padding:80px clamp(20px,5vw,80px)}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start}
+.contact-info{display:flex;flex-direction:column;gap:16px}
+.contact-card{
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:var(--radius-sm);padding:20px 24px;
+  display:flex;align-items:center;gap:16px;
+  transition:border-color 0.25s,transform 0.25s;
+}
+.contact-card:hover{border-color:var(--accent);transform:translateX(4px)}
+.contact-card .cc-icon{
+  width:44px;height:44px;border-radius:12px;
+  background:var(--surface2);display:flex;align-items:center;justify-content:center;
+  font-size:1.2rem;flex-shrink:0;
+}
+.contact-card .cc-label{font-size:0.72rem;color:var(--text2);letter-spacing:0.05em;text-transform:uppercase;font-weight:500;margin-bottom:3px}
+.contact-card .cc-val{font-size:0.95rem;font-weight:500;color:var(--text)}
+.contact-form{
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:var(--radius);padding:36px;
+}
+.form-title{font-family:'Clash Display',sans-serif;font-size:1.4rem;font-weight:700;margin-bottom:24px;letter-spacing:-0.02em}
+.form-group{margin-bottom:18px}
+.form-group label{display:block;font-size:0.8rem;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:var(--text2);margin-bottom:8px}
+.form-group input,.form-group textarea{
+  width:100%;background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--radius-sm);padding:13px 16px;
+  color:var(--text);font-family:'Inter',sans-serif;font-size:0.95rem;
+  outline:none;transition:border-color 0.25s,background 0.25s;resize:none;
+}
+.form-group input:focus,.form-group textarea:focus{border-color:var(--accent);background:var(--surface2)}
+.form-group textarea{height:120px}
+.submit-btn{
+  width:100%;background:linear-gradient(135deg,var(--accent2),var(--accent));
+  color:#fff;border:none;padding:15px;border-radius:100px;
+  font-size:0.95rem;font-weight:600;cursor:none;
+  box-shadow:0 0 30px var(--glow);
+  transition:transform 0.2s,box-shadow 0.2s,opacity 0.2s;
+  letter-spacing:0.02em;
+}
+.submit-btn:hover{transform:translateY(-2px);box-shadow:0 0 50px var(--glow)}
+
+/* ─── Footer ─────────────────────────────────────────────────── */
+footer{
+  border-top:1px solid var(--border);
+  padding:32px clamp(20px,5vw,60px);
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:16px;
+}
+.footer-copy{font-size:0.8rem;color:var(--text2)}
+.footer-love{font-size:0.8rem;color:var(--text2)}
+.footer-love span{color:var(--pink)}
+
+/* ─── Animations ─────────────────────────────────────────────── */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity 0.7s cubic-bezier(0.16,1,0.3,1),transform 0.7s cubic-bezier(0.16,1,0.3,1)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* ─── Mobile ─────────────────────────────────────────────────── */
+@media(max-width:768px){
+  .about-grid{grid-template-columns:1fr}
+  .contact-grid{grid-template-columns:1fr}
+  .nav-links a:not(.active){display:none}
+  .hamburger{display:flex}
+  .hero-preview{gap:12px}
+  .preview-card{min-width:140px;padding:16px 18px}
+  .about-badge{bottom:-10px;right:-10px;padding:14px 18px}
+}
+
+/* ─── Page transition ────────────────────────────────────────── */
+.page-transition{
+  position:fixed;inset:0;background:var(--accent2);z-index:9990;
+  pointer-events:none;
+  clip-path:circle(0% at 50% 50%);
+  transition:clip-path 0.5s cubic-bezier(0.77,0,0.175,1);
+}
+.page-transition.active{clip-path:circle(150% at 50% 50%)}
+.page-transition.out{clip-path:circle(0% at 50% 50%)}
+</style>
+</head>
+<body>
+
+<!-- Cursor -->
+<div id="cursor"></div>
+<div id="cursor-trail"></div>
+<div class="page-transition" id="pt"></div>
+
+<!-- Nav -->
+<nav id="mainNav">
+  <div class="nav-logo">Vishva.</div>
+  <div class="nav-links" id="navLinks">
+    <a href="#" class="active" onclick="navigate('home',this)">Home</a>
+    <a href="#" onclick="navigate('about',this)">About Me</a>
+    <a href="#" onclick="navigate('works',this)">Works</a>
+    <a href="#" onclick="navigate('why',this)">Why Website?</a>
+    <a href="#" onclick="navigate('contact',this)">Contact</a>
+    <button class="theme-toggle" id="themeBtn" title="Toggle theme">🌙</button>
+  </div>
+  <button class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ════════════ HOME PAGE ════════════ -->
+<div class="page active" id="home">
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+
+  <div class="avatar-wrap">
+    <div class="avatar-placeholder">V</div>
+    <div class="avatar-ring"></div>
+  </div>
+
+  <div class="hero-tag">✦ Available for Freelance</div>
+  <h1 class="hero-title">Hi, I'm <span class="grad">Vishva</span></h1>
+  <p class="hero-sub">I craft beautiful, functional websites that help businesses grow online — turning ideas into pixel-perfect digital experiences.</p>
+
+  <div class="hero-btns">
+    <button class="btn-primary" onclick="navigate('works',document.querySelector('[onclick*=works]'))">View My Works</button>
+    <button class="btn-outline" onclick="navigate('contact',document.querySelector('[onclick*=contact]'))">Let's Talk →</button>
+  </div>
+
+  <div class="hero-preview">
+    <div class="preview-card">
+      <div class="pc-icon">🖥️</div>
+      <div class="pc-label">Landing Page</div>
+      <div class="pc-val">Demo →</div>
+      <a class="pc-link" href="#" onclick="navigate('works',document.querySelector('[onclick*=works]'));return false">See Sample ↗</a>
+    </div>
+    <div class="preview-card">
+      <div class="pc-icon">📄</div>
+      <div class="pc-label">Static Page</div>
+      <div class="pc-val">Demo →</div>
+      <a class="pc-link" href="#" onclick="navigate('works',document.querySelector('[onclick*=works]'));return false">See Sample ↗</a>
+    </div>
+    <div class="preview-card">
+      <div class="pc-icon">⚡</div>
+      <div class="pc-label">Skills</div>
+      <div class="pc-val">HTML · CSS · JS</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ ABOUT PAGE ════════════ -->
+<div class="page" id="about">
+  <div class="section about-grid">
+    <div class="about-img-wrap reveal">
+      <div class="about-img-placeholder">
+        <div class="pi-icon">📸</div>
+        <span>Replace with your photo</span>
+        <small style="opacity:0.5;font-size:0.72rem">vishva-photo.jpg</small>
+      </div>
+      <div class="about-badge">
+        <div class="ab-num">2+</div>
+        <div class="ab-txt">Years designing</div>
+      </div>
+    </div>
+    <div class="about-content reveal">
+      <div class="section-label">About Me</div>
+      <h2 class="section-title">Designing <span style="color:var(--accent)">web experiences</span> that matter</h2>
+      <p class="about-bio">I'm Vishva, a freelance web designer based in India, passionate about creating clean, modern websites that not only look stunning but also help businesses connect with their audience. I specialise in crafting landing pages and static websites with smooth interactions and thoughtful design.</p>
+      <p class="about-bio" style="margin-top:-12px">Every project I take on starts with understanding your brand and ends with a website your customers remember.</p>
+
+      <div class="skills-wrap">
+        <div class="skills-label">My Toolkit</div>
+        <div class="skill-chips">
+          <div class="chip"><span class="dot" style="background:#e34f26"></span>HTML5</div>
+          <div class="chip"><span class="dot" style="background:#1572b6"></span>CSS3</div>
+          <div class="chip"><span class="dot" style="background:#f7df1e"></span>JavaScript</div>
+          <div class="chip"><span class="dot" style="background:#7c3aed"></span>Responsive Design</div>
+          <div class="chip"><span class="dot" style="background:#f472b6"></span>UI Animations</div>
+          <div class="chip"><span class="dot" style="background:#67e8f9"></span>Landing Pages</div>
+          <div class="chip"><span class="dot" style="background:#34d399"></span>Static Websites</div>
+        </div>
+      </div>
+
+      <div class="about-social">
+        <a class="social-btn" href="https://instagram.com/your_username" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          Instagram
+        </a>
+        <a class="social-btn" href="https://wa.me/91XXXXXXXXXX" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          WhatsApp
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ WORKS PAGE ════════════ -->
+<div class="page" id="works">
+  <div class="works-intro">
+    <div class="section-label reveal">My Portfolio</div>
+    <h2 class="section-title reveal">Work I'm <span style="color:var(--accent)">proud of</span></h2>
+    <p class="section-sub reveal">A curated selection of landing pages and static websites built with HTML, CSS & JavaScript.</p>
+  </div>
+
+  <div class="works-grid">
+    <div class="work-card reveal">
+      <div class="work-thumb" style="background:linear-gradient(135deg,#1a1030,#2d1b69)">
+        <div class="work-thumb-inner">🛋️</div>
+      </div>
+      <div class="work-meta">
+        <div class="work-type">Landing Page</div>
+        <div class="work-name">LuxeHome Furniture</div>
+        <div class="work-desc">A premium furniture brand landing page with smooth scroll animations, product showcase and enquiry form.</div>
+        <div class="work-tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JS</span><span class="tag">Landing Page</span></div>
+        <a class="work-link" href="#">View Live ↗</a>
+      </div>
+    </div>
+
+    <div class="work-card reveal">
+      <div class="work-thumb" style="background:linear-gradient(135deg,#0f1a12,#1a3a20)">
+        <div class="work-thumb-inner">☕</div>
+      </div>
+      <div class="work-meta">
+        <div class="work-type">Static Website</div>
+        <div class="work-name">Brewcraft Café</div>
+        <div class="work-desc">A cosy café website with menu, ambiance gallery and reservation CTA — all static, fast and beautiful.</div>
+        <div class="work-tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JS</span><span class="tag">Static</span></div>
+        <a class="work-link" href="#">View Live ↗</a>
+      </div>
+    </div>
+
+    <div class="work-card reveal">
+      <div class="work-thumb" style="background:linear-gradient(135deg,#1a0f1a,#3a1040)">
+        <div class="work-thumb-inner">🎨</div>
+      </div>
+      <div class="work-meta">
+        <div class="work-type">Landing Page</div>
+        <div class="work-name">Aura Creative Studio</div>
+        <div class="work-desc">Bold studio portfolio landing page featuring animated hero, services section and client testimonials.</div>
+        <div class="work-tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">Animations</span></div>
+        <a class="work-link" href="#">View Live ↗</a>
+      </div>
+    </div>
+
+    <div class="work-card reveal">
+      <div class="work-thumb" style="background:linear-gradient(135deg,#0a1a2a,#0d2a4a)">
+        <div class="work-thumb-inner">🎓</div>
+      </div>
+      <div class="work-meta">
+        <div class="work-type">Static Website</div>
+        <div class="work-name">BrightPath Academy</div>
+        <div class="work-desc">A clean and accessible school website with course listings, faculty profiles and enquiry form.</div>
+        <div class="work-tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JS</span><span class="tag">Static</span></div>
+        <a class="work-link" href="#">View Live ↗</a>
+      </div>
+    </div>
+
+    <div class="work-card reveal">
+      <div class="work-thumb" style="background:linear-gradient(135deg,#1a1200,#2a2000)">
+        <div class="work-thumb-inner">🏋️</div>
+      </div>
+      <div class="work-meta">
+        <div class="work-type">Landing Page</div>
+        <div class="work-name">FitCore Gym</div>
+        <div class="work-desc">A high-energy gym landing page with membership pricing, class schedule and trainer spotlight.</div>
+        <div class="work-tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">Landing Page</span></div>
+        <a class="work-link" href="#">View Live ↗</a>
+      </div>
+    </div>
+
+    <div class="work-card reveal">
+      <div class="work-thumb" style="background:linear-gradient(135deg,#001a1a,#003333)">
+        <div class="work-thumb-inner">🏥</div>
+      </div>
+      <div class="work-meta">
+        <div class="work-type">Static Website</div>
+        <div class="work-name">MediCare Clinic</div>
+        <div class="work-desc">A professional clinic static site with doctor profiles, services and appointment booking form.</div>
+        <div class="work-tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">Static</span></div>
+        <a class="work-link" href="#">View Live ↗</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ WHY WEBSITE PAGE ════════════ -->
+<div class="page" id="why">
+  <div class="why-intro">
+    <div class="section-label reveal">The Reason</div>
+    <h2 class="section-title reveal">Why does your business <span style="color:var(--accent)">need a website?</span></h2>
+
+    <div class="why-brief reveal">
+      <p class="why-brief-text">In today's digital world, <strong>your website is your 24/7 salesperson</strong>. Unlike social media, your website is a space you fully own — no algorithm, no limits. A well-designed website builds <strong>credibility, trust, and visibility</strong>. It tells potential customers exactly who you are, what you offer, and why they should choose you. Whether you're a small shop or a growing business, <strong>not having a website means losing customers to competitors who do</strong>. A website opens doors to new customers, new markets, and new revenue — even while you sleep.</p>
+    </div>
+  </div>
+
+  <div class="biz-grid">
+    <div class="biz-card reveal">
+      <div class="biz-icon">🛋️</div>
+      <div class="biz-name">Furniture Shops</div>
+      <div class="biz-reason">Customers browse furniture online before visiting stores. A website showcasing your collection, pricing and location turns browsers into buyers.</div>
+      <span class="biz-need">Needs a website</span>
+    </div>
+    <div class="biz-card reveal">
+      <div class="biz-icon">🎨</div>
+      <div class="biz-name">Creative Studios</div>
+      <div class="biz-reason">Your portfolio is your pitch. A stunning website showcases your work 24/7 and attracts clients who are actively searching for creative talent.</div>
+      <span class="biz-need">Needs a website</span>
+    </div>
+    <div class="biz-card reveal">
+      <div class="biz-icon">☕</div>
+      <div class="biz-name">Cafés & Restaurants</div>
+      <div class="biz-reason">People search "café near me" every day. A website with your menu, photos and location puts you on the map and drives foot traffic.</div>
+      <span class="biz-need">Needs a website</span>
+    </div>
+    <div class="biz-card reveal">
+      <div class="biz-icon">🎓</div>
+      <div class="biz-name">Schools & Colleges</div>
+      <div class="biz-reason">Parents and students research institutions online first. A clear website with courses, fees and testimonials builds confidence and drives admissions.</div>
+      <span class="biz-need">Needs a website</span>
+    </div>
+    <div class="biz-card reveal">
+      <div class="biz-icon">🏋️</div>
+      <div class="biz-name">Gyms & Fitness</div>
+      <div class="biz-reason">Fitness seekers compare gyms online. A website with membership plans, trainer profiles and class schedules converts curious visitors into paying members.</div>
+      <span class="biz-need">Needs a website</span>
+    </div>
+    <div class="biz-card reveal">
+      <div class="biz-icon">🏥</div>
+      <div class="biz-name">Clinics & Doctors</div>
+      <div class="biz-reason">Trust is everything in healthcare. A professional website with doctor credentials, services and easy appointment booking brings new patients to your door.</div>
+      <span class="biz-need">Needs a website</span>
+    </div>
+    <div class="biz-card reveal">
+      <div class="biz-icon">💇</div>
+      <div class="biz-name">Salons & Spas</div>
+      <div class="biz-reason">Customers discover salons via search. A website with service menus, pricing and before-after galleries makes them choose you over competitors.</div>
+      <span class="biz-need">Needs a website</span>
+    </div>
+    <div class="biz-card reveal">
+      <div class="biz-icon">🏗️</div>
+      <div class="biz-name">Contractors & Builders</div>
+      <div class="biz-reason">People need proof before hiring. A website with your past projects, client reviews and contact form turns enquiries into signed contracts.</div>
+      <span class="biz-need">Needs a website</span>
+    </div>
+    <div class="biz-card reveal">
+      <div class="biz-icon">🛒</div>
+      <div class="biz-name">Retail Shops</div>
+      <div class="biz-reason">Even if you're not selling online, a website gives customers product info, shop timings and directions — reducing missed opportunities.</div>
+      <span class="biz-need">Needs a website</span>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ CONTACT PAGE ════════════ -->
+<div class="page" id="contact">
+  <div class="contact-wrap">
+    <div class="section-label reveal">Get In Touch</div>
+    <h2 class="section-title reveal">Let's build something <span style="color:var(--accent)">great together</span></h2>
+    <p class="section-sub reveal" style="margin-bottom:48px">Have a project in mind? Fill the form or reach out directly — I'd love to hear about your vision.</p>
+
+    <div class="contact-grid">
+      <div class="contact-info reveal">
+        <a class="contact-card" href="mailto:vishva@email.com">
+          <div class="cc-icon">📧</div>
+          <div><div class="cc-label">Email</div><div class="cc-val">vishva@email.com</div></div>
+        </a>
+        <a class="contact-card" href="https://wa.me/91XXXXXXXXXX" target="_blank">
+          <div class="cc-icon">💬</div>
+          <div><div class="cc-label">WhatsApp</div><div class="cc-val">+91 XXXXX XXXXX</div></div>
+        </a>
+        <a class="contact-card" href="https://instagram.com/your_username" target="_blank">
+          <div class="cc-icon">📸</div>
+          <div><div class="cc-label">Instagram</div><div class="cc-val">@your_username</div></div>
+        </a>
+        <div class="contact-card">
+          <div class="cc-icon">📍</div>
+          <div><div class="cc-label">Location</div><div class="cc-val">India · Remote Worldwide</div></div>
+        </div>
+        <div class="contact-card">
+          <div class="cc-icon">⏱️</div>
+          <div><div class="cc-label">Response Time</div><div class="cc-val">Within 24 hours</div></div>
+        </div>
+      </div>
+
+      <div class="contact-form reveal">
+        <div class="form-title">Send a message</div>
+        <div class="form-group">
+          <label>Your Name</label>
+          <input type="text" placeholder="e.g. Arjun Kumar">
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" placeholder="you@example.com">
+        </div>
+        <div class="form-group">
+          <label>Project Type</label>
+          <input type="text" placeholder="Landing Page / Static Website">
+        </div>
+        <div class="form-group">
+          <label>Message</label>
+          <textarea placeholder="Tell me about your project…"></textarea>
+        </div>
+        <button class="submit-btn" onclick="handleSubmit()">Send Message ✦</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-copy">© 2025 Vishva. All rights reserved.</div>
+    <div class="footer-love">Designed & built with <span>♥</span> by Vishva</div>
+  </footer>
+</div>
+
+<script>
+/* ── Cursor ─────────────────────────────────────── */
+const cursor=document.getElementById('cursor');
+const trail=document.getElementById('cursor-trail');
+document.addEventListener('mousemove',e=>{
+  cursor.style.left=e.clientX+'px';cursor.style.top=e.clientY+'px';
+  trail.style.left=e.clientX+'px';trail.style.top=e.clientY+'px';
+});
+document.querySelectorAll('a,button').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cursor.style.width='20px';cursor.style.height='20px';trail.style.width='60px';trail.style.height='60px'});
+  el.addEventListener('mouseleave',()=>{cursor.style.width='12px';cursor.style.height='12px';trail.style.width='40px';trail.style.height='40px'});
+});
+
+/* ── Theme Toggle ───────────────────────────────── */
+const html=document.documentElement;
+const themeBtn=document.getElementById('themeBtn');
+themeBtn.addEventListener('click',()=>{
+  const isDark=html.dataset.theme==='dark';
+  html.dataset.theme=isDark?'light':'dark';
+  themeBtn.textContent=isDark?'🌙':'☀️';
+});
+
+/* ── Navigation ─────────────────────────────────── */
+let current='home';
+function navigate(id,link){
+  if(id===current)return;
+  const pt=document.getElementById('pt');
+  pt.classList.add('active');
+  setTimeout(()=>{
+    document.getElementById(current).classList.remove('active');
+    document.getElementById(id).classList.add('active');
+    current=id;
+    // Update nav active state
+    document.querySelectorAll('.nav-links a').forEach(a=>a.classList.remove('active'));
+    if(link)link.classList.add('active');
+    window.scrollTo(0,0);
+    pt.classList.remove('active');
+    pt.classList.add('out');
+    setTimeout(()=>pt.classList.remove('out'),500);
+    observeReveal();
+  },250);
+}
+
+/* ── Hamburger ──────────────────────────────────── */
+function toggleMenu(){
+  const links=document.getElementById('navLinks');
+  links.style.display=links.style.display==='flex'?'none':'flex';
+}
+
+/* ── Scroll Reveal ──────────────────────────────── */
+function observeReveal(){
+  const obs=new IntersectionObserver((entries)=>{
+    entries.forEach((e,i)=>{
+      if(e.isIntersecting){
+        setTimeout(()=>e.target.classList.add('visible'),i*80);
+        obs.unobserve(e.target);
+      }
+    });
+  },{threshold:0.12});
+  document.querySelectorAll('.reveal').forEach(el=>{el.classList.remove('visible');obs.observe(el)});
+}
+observeReveal();
+
+/* ── Form Submit ────────────────────────────────── */
+function handleSubmit(){
+  const btn=document.querySelector('.submit-btn');
+  btn.textContent='Sending… ✦';btn.style.opacity='0.7';
+  setTimeout(()=>{btn.textContent='Sent! I\'ll reply soon ✓';btn.style.background='linear-gradient(135deg,#059669,#10b981)';},1400);
+}
+
+/* ── Staggered chip animation ───────────────────── */
+document.querySelectorAll('.chip').forEach((c,i)=>{
+  c.style.animationDelay=`${i*0.07}s`;
+  c.style.animation='fade-up 0.6s both';
+});
+</script>
+</body>
+</html>
