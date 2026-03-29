@@ -72,9 +72,9 @@ body::before{
   position:fixed;inset:0;z-index:99999;
   background:var(--bg);
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;
-  transition:opacity .7s ease,visibility .7s ease;
+  transition:opacity .6s ease, visibility .6s ease;
 }
-#loader.hide{opacity:0;visibility:hidden;pointer-events:none}
+#loader.hide,#loader[style*="opacity:0"]{opacity:0;visibility:hidden;pointer-events:none}
 .loader-logo{
   font-family:'Clash Display',sans-serif;font-size:2.4rem;font-weight:700;
   background:linear-gradient(135deg,var(--accent3),var(--accent),var(--pink));
@@ -543,9 +543,7 @@ footer{
 .reveal-left.visible{opacity:1;transform:translateX(0)}
 
 /* ════ PAGE TRANSITION ════ */
-.pt{position:fixed;inset:0;background:var(--accent2);z-index:9990;pointer-events:none;clip-path:circle(0% at 50% 50%);transition:clip-path .5s cubic-bezier(.77,0,.175,1)}
-.pt.in{clip-path:circle(150% at 50% 50%)}
-.pt.out{clip-path:circle(0% at 50% 50%)}
+.pt{display:none}
 
 /* ════ RESPONSIVE ════ */
 @media(max-width:768px){
@@ -573,7 +571,7 @@ footer{
 <canvas id="particles-canvas"></canvas>
 
 <!-- LOADER -->
-<div id="loader">
+<div id="loader" style="display:none">
   <div class="loader-logo">Vishva.</div>
   <div class="loader-msg" id="lMsg">Premium Website Design</div>
   <div class="loader-bar-track"><div class="loader-bar-fill" id="lBar"></div></div>
@@ -633,7 +631,7 @@ footer{
   <div class="orb orb1"></div><div class="orb orb2"></div><div class="orb orb3"></div>
 
   <div class="avatar-wrap">
-    <img src="image/1.png" alt="Vishva">
+    <img src="https://ui-avatars.com/api/?name=Vishva&background=7c3aed&color=fff&size=300&bold=true&font-size=0.38" alt="Vishva">
     <div class="avatar-ring"></div>
   </div>
 
@@ -673,7 +671,7 @@ footer{
     <div class="about-grid">
       <div class="about-img-wrap reveal-left">
         <img class="about-img"
-          src="image/2.png"
+          src="https://ui-avatars.com/api/?name=Vishva&background=1a1a2e&color=a78bfa&size=500&bold=true&font-size=0.3"
           alt="Vishva – Web Designer">
         <div class="about-badge" style="animation:float-badge 4s ease-in-out infinite">
           <div class="ab-num">2+</div>
@@ -731,16 +729,16 @@ footer{
       <!-- Card 1 — Furniture -->
       <div class="work-card reveal" data-type="landing">
         <div class="work-thumb">
-          <img src="https://campus.vitracircle.com/cdn/shop/collections/5807452_Vitra_Campus_Factory_Sale_2021_57__master.jpg?v=1699964962" alt="Furniture Shop Website" loading="lazy">
+          <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&q=80&fit=crop" alt="Furniture Shop Website" loading="lazy">
           <div class="work-thumb-overlay"></div>
           <div class="work-thumb-badge">Landing Page</div>
         </div>
         <div class="work-meta">
-          <div class="work-name">Sivasakthi Marketing</div>
+          <div class="work-name">LuxeHome Furniture</div>
           <div class="work-desc">Premium furniture brand with smooth scroll animations, product showcase and enquiry form.</div>
           <div class="work-tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JS</span></div>
           <div class="work-footer">
-            <a class="work-link" href="https://sivasakthimarketing.github.io/Vishva/">View Live ↗</a>
+            <a class="work-link" href="#">View Live ↗</a>
             <div class="work-stack">
               <div class="stack-dot" style="background:#e34f26" title="HTML"></div>
               <div class="stack-dot" style="background:#1572b6" title="CSS"></div>
@@ -751,7 +749,7 @@ footer{
       </div>
 
       <!-- Card 2 — Café -->
-      <!-- <div class="work-card reveal" data-type="static">
+      <div class="work-card reveal" data-type="static">
         <div class="work-thumb">
           <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=600&q=80&fit=crop" alt="Cafe Website" loading="lazy">
           <div class="work-thumb-overlay"></div>
@@ -770,21 +768,21 @@ footer{
             </div>
           </div>
         </div>
-      </div> -->
+      </div>
 
       <!-- Card 3 — Studio -->
       <div class="work-card reveal" data-type="landing">
         <div class="work-thumb">
-          <img src="https://images.unsplash.com/photo-1727451139462-cd34008cd50b?q=80&w=1025&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Creative Studio Website" loading="lazy">
+          <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80&fit=crop" alt="Creative Studio Website" loading="lazy">
           <div class="work-thumb-overlay"></div>
           <div class="work-thumb-badge">Landing Page</div>
         </div>
         <div class="work-meta">
-          <div class="work-name">Vishva Studio</div>
-          <div class="work-desc">Bold studio portfolio with animation, services section and client testimonials.</div>
+          <div class="work-name">Aura Creative Studio</div>
+          <div class="work-desc">Bold studio portfolio with animated hero, services section and client testimonials.</div>
           <div class="work-tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">Animations</span></div>
           <div class="work-footer">
-            <a class="work-link" href="https://vetrivishva.github.io/studio/">View Live ↗</a>
+            <a class="work-link" href="#">View Live ↗</a>
             <div class="work-stack">
               <div class="stack-dot" style="background:#e34f26"></div>
               <div class="stack-dot" style="background:#1572b6"></div>
@@ -797,16 +795,16 @@ footer{
       <!-- Card 4 — School -->
       <div class="work-card reveal" data-type="static">
         <div class="work-thumb">
-          <img src="https://cdn.swadeshonline.com/v2/patient-paper-41f385/swad-p/wrkr/company/default/applications/default/meta-field/assets/original/BN9NU24wb-IMG20231214151643.jpg" alt="School Website" loading="lazy">
+          <img src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=600&q=80&fit=crop" alt="School Website" loading="lazy">
           <div class="work-thumb-overlay"></div>
           <div class="work-thumb-badge">Static Website</div>
         </div>
         <div class="work-meta">
-          <div class="work-name">Sivasakthi Marketing</div>
-          <div class="work-desc">The website brings you a premium range of household products</div>
+          <div class="work-name">BrightPath Academy</div>
+          <div class="work-desc">Clean school website with course listings, faculty profiles and enquiry form.</div>
           <div class="work-tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JS</span></div>
           <div class="work-footer">
-            <a class="work-link" href="https://vishva-0628.github.io/Test/">View Live ↗</a>
+            <a class="work-link" href="#">View Live ↗</a>
             <div class="work-stack">
               <div class="stack-dot" style="background:#e34f26"></div>
               <div class="stack-dot" style="background:#1572b6"></div>
@@ -817,7 +815,7 @@ footer{
       </div>
 
       <!-- Card 5 — Gym -->
-      <!-- <div class="work-card reveal" data-type="landing">
+      <div class="work-card reveal" data-type="landing">
         <div class="work-thumb">
           <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80&fit=crop" alt="Gym Website" loading="lazy">
           <div class="work-thumb-overlay"></div>
@@ -836,10 +834,10 @@ footer{
             </div>
           </div>
         </div>
-      </div> -->
+      </div>
 
       <!-- Card 6 — Clinic -->
-      <!-- <div class="work-card reveal" data-type="static">
+      <div class="work-card reveal" data-type="static">
         <div class="work-thumb">
           <img src="https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?w=600&q=80&fit=crop" alt="Clinic Website" loading="lazy">
           <div class="work-thumb-overlay"></div>
@@ -858,10 +856,10 @@ footer{
             </div>
           </div>
         </div>
-      </div> -->
+      </div>
 
       <!-- Card 7 — Salon -->
-      <!-- <div class="work-card reveal" data-type="landing">
+      <div class="work-card reveal" data-type="landing">
         <div class="work-thumb">
           <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?w=600&q=80&fit=crop" alt="Salon Website" loading="lazy">
           <div class="work-thumb-overlay"></div>
@@ -880,10 +878,10 @@ footer{
             </div>
           </div>
         </div>
-      </div> -->
+      </div>
 
       <!-- Card 8 — Restaurant -->
-      <!-- <div class="work-card reveal" data-type="static">
+      <div class="work-card reveal" data-type="static">
         <div class="work-thumb">
           <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80&fit=crop" alt="Restaurant Website" loading="lazy">
           <div class="work-thumb-overlay"></div>
@@ -902,10 +900,10 @@ footer{
             </div>
           </div>
         </div>
-      </div> -->
+      </div>
 
       <!-- Card 9 — Real Estate -->
-      <!-- <div class="work-card reveal" data-type="landing">
+      <div class="work-card reveal" data-type="landing">
         <div class="work-thumb">
           <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=600&q=80&fit=crop" alt="Real Estate Website" loading="lazy">
           <div class="work-thumb-overlay"></div>
@@ -924,7 +922,7 @@ footer{
             </div>
           </div>
         </div>
-      </div> -->
+      </div>
 
     </div><!-- /works-grid -->
 
@@ -941,24 +939,24 @@ footer{
         </div>
       </div>
 
-      <!-- ── Sivasakthi Marketing ── -->
+      <!-- ── LuxeHome Furniture ── -->
       <div class="ss-project reveal">
         <div class="ss-project-label">
           <span class="ss-dot" style="background:linear-gradient(135deg,#a78bfa,#f472b6)"></span>
-          Sivasakthi Marketing
+          LuxeHome Furniture
         </div>
         <div class="ss-grid">
           <div class="ss-card">
             <div class="ss-img-wrap">
-              <img src="image/view/1.png" alt="Home Page" loading="lazy">
+              <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=700&q=85&fit=crop" alt="Home Page" loading="lazy">
               <div class="ss-img-overlay">
                 <span class="ss-expand">⤢ View</span>
               </div>
             </div>
             <div class="ss-label-row">
-              <!-- <span class="ss-page-icon">🏠</span>
-              <span class="ss-page-name">Home Page</span> -->
-              <span class="ss-page-pill">Products</span>
+              <span class="ss-page-icon">🏠</span>
+              <span class="ss-page-name">Home Page</span>
+              <span class="ss-page-pill">Hero Section</span>
             </div>
           </div>
           <div class="ss-card">
@@ -1432,8 +1430,8 @@ footer{
     </div><!-- /ss-section -->
 
     <!-- LIGHTBOX -->
-    <div id="lightbox" onclick="closeLB()">
-      <div class="lb-inner" onclick="event.stopPropagation()">
+    <div id="lightbox">
+      <div class="lb-inner">
         <button class="lb-close" onclick="closeLB()">✕</button>
         <button class="lb-nav lb-prev" onclick="shiftLB(-1)">‹</button>
         <img id="lbImg" src="" alt="">
@@ -1479,7 +1477,7 @@ footer{
     </div>
     <div class="contact-grid">
       <div class="contact-info reveal">
-        <a class="contact-card" href="mailto:vishva@email.com"><div class="cc-icon">📧</div><div><div class="cc-label">Email</div><div class="cc-val">vishva@email.com</div></div></a>
+        <a class="contact-card" href="/cdn-cgi/l/email-protection#e5938c968d9384a58088848c89cb868a88"><div class="cc-icon">📧</div><div><div class="cc-label">Email</div><div class="cc-val"><span class="__cf_email__" data-cfemail="c6b0afb5aeb0a786a3aba7afaae8a5a9ab">[email&#160;protected]</span></div></div></a>
         <a class="contact-card" href="https://wa.me/91XXXXXXXXXX" target="_blank"><div class="cc-icon">💬</div><div><div class="cc-label">WhatsApp</div><div class="cc-val">+91 XXXXX XXXXX</div></div></a>
         <a class="contact-card" href="https://instagram.com/your_username" target="_blank"><div class="cc-icon">📸</div><div><div class="cc-label">Instagram</div><div class="cc-val">@your_username</div></div></a>
         <div class="contact-card"><div class="cc-icon">📍</div><div><div class="cc-label">Location</div><div class="cc-val">India · Remote Worldwide</div></div></div>
@@ -1506,202 +1504,286 @@ footer{
 </div>
 
 <script>
-/* ════ PARTICLES ════ */
+/* ═══ PARTICLES ═══ */
 (function(){
   const c=document.getElementById('particles-canvas');
+  if(!c)return;
   const ctx=c.getContext('2d');
   let W,H,pts=[];
-  function resize(){W=c.width=innerWidth;H=c.height=innerHeight}
-  resize();window.addEventListener('resize',resize);
-  const N=55;
-  for(let i=0;i<N;i++)pts.push({
-    x:Math.random()*1920,y:Math.random()*1080,
-    vx:(Math.random()-.5)*.28,vy:(Math.random()-.5)*.28,
-    r:Math.random()*1.4+.4,
-    a:Math.random()*.5+.1
-  });
+  function resize(){W=c.width=innerWidth;H=c.height=innerHeight;}
+  resize();
+  window.addEventListener('resize',resize);
+  for(let i=0;i<55;i++) pts.push({x:Math.random()*1920,y:Math.random()*1080,vx:(Math.random()-.5)*.28,vy:(Math.random()-.5)*.28,r:Math.random()*1.4+.4,a:Math.random()*.5+.1});
   function draw(){
     ctx.clearRect(0,0,W,H);
-    pts.forEach(p=>{
-      p.x+=p.vx;p.y+=p.vy;
-      if(p.x<0||p.x>W)p.vx*=-1;
-      if(p.y<0||p.y>H)p.vy*=-1;
-      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-      ctx.fillStyle=`rgba(167,139,250,${p.a})`;ctx.fill();
-    });
-    // Connect nearby
-    for(let i=0;i<pts.length;i++){
-      for(let j=i+1;j<pts.length;j++){
-        const dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y;
-        const d=Math.sqrt(dx*dx+dy*dy);
-        if(d<130){
-          ctx.beginPath();
-          ctx.moveTo(pts[i].x,pts[i].y);ctx.lineTo(pts[j].x,pts[j].y);
-          ctx.strokeStyle=`rgba(167,139,250,${.06*(1-d/130)})`;
-          ctx.lineWidth=.5;ctx.stroke();
-        }
-      }
-    }
+    pts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle='rgba(167,139,250,'+p.a+')';ctx.fill();});
+    for(let i=0;i<pts.length;i++){for(let j=i+1;j<pts.length;j++){const dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,d=Math.sqrt(dx*dx+dy*dy);if(d<130){ctx.beginPath();ctx.moveTo(pts[i].x,pts[i].y);ctx.lineTo(pts[j].x,pts[j].y);ctx.strokeStyle='rgba(167,139,250,'+(0.06*(1-d/130))+')';ctx.lineWidth=.5;ctx.stroke();}}}
     requestAnimationFrame(draw);
   }
   draw();
 })();
 
-/* ════ LOADER ════ */
-const MSGS=['Premium Website Design...','At Affordable Cost...','Clean · Fast · Beautiful','Built with HTML · CSS · JS','Your Brand, Online ✦'];
-let mi=0;
-const lMsg=document.getElementById('lMsg'),lBar=document.getElementById('lBar');
-function cycleMsg(){lMsg.style.animation='none';lMsg.offsetHeight;lMsg.style.animation='fade-in-msg .45s ease both';lMsg.textContent=MSGS[mi%MSGS.length];mi++;}
-const msgT=setInterval(cycleMsg,700);
-let prog=0;const barT=setInterval(()=>{prog+=Math.random()*18;if(prog>=100){prog=100;clearInterval(barT);}lBar.style.width=prog+'%';},200);
-window.addEventListener('load',()=>{setTimeout(()=>{clearInterval(msgT);document.getElementById('loader').classList.add('hide');observeReveal();},2400);});
+/* ═══ LOADER ═══ */
+(function(){
+  var loader = document.getElementById('loader');
+  if(!loader) return;
+  var MSGS = ['Premium Website Design...','At Affordable Cost...','Clean · Fast · Beautiful','Built with HTML · CSS · JS','Your Brand, Online ✦'];
+  var mi = 0;
+  var lMsg = document.getElementById('lMsg');
+  var lBar = document.getElementById('lBar');
+  loader.style.display = 'flex';
+  var msgT = setInterval(function(){
+    if(lMsg){ lMsg.textContent = MSGS[mi % MSGS.length]; mi++; }
+  }, 700);
+  var prog = 0;
+  var barT = setInterval(function(){
+    prog += Math.random()*18;
+    if(prog >= 100){ prog = 100; clearInterval(barT); }
+    if(lBar) lBar.style.width = prog + '%';
+  }, 200);
+  setTimeout(function(){
+    clearInterval(msgT);
+    clearInterval(barT);
+    if(lBar) lBar.style.width = '100%';
+    loader.style.transition = 'opacity 0.5s ease';
+    loader.style.opacity = '0';
+    setTimeout(function(){
+      loader.style.display = 'none';
+      observeReveal();
+    }, 500);
+  }, 2500);
+})();
 
-/* ════ NAV / PAGES ════ */
-let cur='home';
-function goTo(id){
-  if(id===cur)return;
-  const pt=document.getElementById('pt');
-  pt.classList.remove('out');pt.classList.add('in');
-  setTimeout(()=>{
-    document.getElementById(cur).classList.remove('active');
-    document.getElementById(id).classList.add('active');
-    cur=id;syncNav();window.scrollTo(0,0);
-    pt.classList.remove('in');pt.classList.add('out');
-    setTimeout(()=>pt.classList.remove('out'),500);
-    observeReveal();
-  },240);
+/* ═══ NAVIGATION ═══ */
+var cur = 'home';
+
+function goTo(id) {
+  if (id === cur) return;
+  var oldEl = document.getElementById(cur);
+  var newEl = document.getElementById(id);
+  if (oldEl) oldEl.classList.remove('active');
+  if (newEl) newEl.classList.add('active');
+  cur = id;
+  document.querySelectorAll('[data-page]').forEach(function(a){
+    a.classList.toggle('active', a.dataset.page === id);
+  });
+  window.scrollTo(0, 0);
+  observeReveal();
+  closeMobileMenu();
 }
-function syncNav(){document.querySelectorAll('[data-page]').forEach(a=>a.classList.toggle('active',a.dataset.page===cur));}
-document.querySelectorAll('[data-page]').forEach(a=>{a.addEventListener('click',()=>{goTo(a.dataset.page);closeMobileMenu();});});
-document.getElementById('navLogo').addEventListener('click',()=>goTo('home'));
 
-/* ── Hamburger ── */
-const hamBtn=document.getElementById('hamBtn'),mMenu=document.getElementById('mobileMenu');
-function closeMobileMenu(){mMenu.classList.remove('open');hamBtn.classList.remove('open');}
-hamBtn.addEventListener('click',e=>{e.stopPropagation();mMenu.classList.toggle('open');hamBtn.classList.toggle('open');});
-document.addEventListener('click',e=>{if(!mMenu.contains(e.target)&&!hamBtn.contains(e.target))closeMobileMenu();});
+document.querySelectorAll('[data-page]').forEach(function(a){
+  a.addEventListener('click', function(){ goTo(this.dataset.page); });
+});
 
-/* ════ FILTER TABS ════ */
-document.querySelectorAll('.f-tab').forEach(tab=>{
-  tab.addEventListener('click',()=>{
-    document.querySelectorAll('.f-tab').forEach(t=>t.classList.remove('active'));
+var navLogo = document.getElementById('navLogo');
+if(navLogo) navLogo.addEventListener('click', function(){ goTo('home'); });
+
+/* ═══ HAMBURGER ═══ */
+var hamBtn = document.getElementById('hamBtn');
+var mMenu  = document.getElementById('mobileMenu');
+
+function closeMobileMenu(){
+  if(mMenu)  mMenu.classList.remove('open');
+  if(hamBtn) hamBtn.classList.remove('open');
+}
+
+if(hamBtn){
+  hamBtn.addEventListener('click', function(e){
+    e.stopPropagation();
+    mMenu.classList.toggle('open');
+    hamBtn.classList.toggle('open');
+  });
+}
+
+document.addEventListener('click', function(e){
+  if(!mMenu || !hamBtn) return;
+  if(!mMenu.contains(e.target) && !hamBtn.contains(e.target)) closeMobileMenu();
+});
+
+/* ═══ FILTER TABS ═══ */
+document.querySelectorAll('.f-tab').forEach(function(tab){
+  tab.addEventListener('click', function(){
+    document.querySelectorAll('.f-tab').forEach(function(t){ t.classList.remove('active'); });
     tab.classList.add('active');
-    const f=tab.dataset.filter;
-    document.querySelectorAll('.work-card').forEach(card=>{
-      if(f==='all'||card.dataset.type===f){
-        card.style.display='';
-        setTimeout(()=>{card.style.opacity='1';card.style.transform='';},10);
-      }else{
-        card.style.opacity='0';
-        card.style.transform='scale(0.95)';
-        setTimeout(()=>card.style.display='none',300);
+    var f = tab.dataset.filter;
+    document.querySelectorAll('.work-card').forEach(function(card){
+      if(f === 'all' || card.dataset.type === f){
+        card.style.display = '';
+        card.style.opacity = '1';
+      } else {
+        card.style.display = 'none';
       }
     });
   });
 });
 
-/* ════ SCROLL REVEAL ════ */
+/* ═══ SCROLL REVEAL ═══ */
 function observeReveal(){
-  const io=new IntersectionObserver((entries)=>{
-    entries.forEach((en,i)=>{if(en.isIntersecting){setTimeout(()=>en.target.classList.add('visible'),i*75);io.unobserve(en.target);}});
-  },{threshold:0.08});
-  document.querySelectorAll('.reveal,.reveal-left').forEach(el=>{el.classList.remove('visible');io.observe(el);});
+  var items = document.querySelectorAll('.reveal, .reveal-left');
+  if(!items.length) return;
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(en, i){
+      if(en.isIntersecting){
+        setTimeout(function(){ en.target.classList.add('visible'); }, i * 75);
+        io.unobserve(en.target);
+      }
+    });
+  }, {threshold: 0.08});
+  items.forEach(function(el){ el.classList.remove('visible'); io.observe(el); });
 }
 
-/* ════ CONTACT → ADMIN ════ */
-const PASS='vishva@admin';const KEY='v_msgs';
-function getMsgs(){try{return JSON.parse(localStorage.getItem(KEY)||'[]');}catch{return[];}}
-function saveMsgs(m){localStorage.setItem(KEY,JSON.stringify(m));}
+/* ═══ CONTACT FORM ═══ */
+var PASS = 'vishva@admin';
+var KEY  = 'v_msgs';
+function getMsgs(){ try{ return JSON.parse(localStorage.getItem(KEY)||'[]'); }catch(e){ return []; } }
+function saveMsgs(m){ localStorage.setItem(KEY, JSON.stringify(m)); }
+
 function handleSubmit(){
-  const name=document.getElementById('fName').value.trim();
-  const email=document.getElementById('fEmail').value.trim();
-  const project=document.getElementById('fProject').value;
-  const msg=document.getElementById('fMsg').value.trim();
-  const btn=document.getElementById('submitBtn');
-  if(!name||!email||!msg){btn.textContent='⚠️ Fill required fields';btn.style.background='linear-gradient(135deg,#dc2626,#ef4444)';setTimeout(()=>{btn.textContent='Send Message ✦';btn.style.background='';},2200);return;}
-  btn.disabled=true;btn.textContent='Sending…';
-  getMsgs();const msgs=getMsgs();
-  msgs.unshift({id:Date.now(),name,email,project,message:msg,time:new Date().toLocaleString('en-IN',{dateStyle:'medium',timeStyle:'short'})});
+  var name    = document.getElementById('fName').value.trim();
+  var email   = document.getElementById('fEmail').value.trim();
+  var project = document.getElementById('fProject').value;
+  var msg     = document.getElementById('fMsg').value.trim();
+  var btn     = document.getElementById('submitBtn');
+  if(!name || !email || !msg){
+    btn.textContent = '⚠️ Fill required fields';
+    btn.style.background = 'linear-gradient(135deg,#dc2626,#ef4444)';
+    setTimeout(function(){ btn.textContent = 'Send Message ✦'; btn.style.background = ''; }, 2200);
+    return;
+  }
+  btn.disabled = true; btn.textContent = 'Sending…';
+  var msgs = getMsgs();
+  msgs.unshift({id:Date.now(),name:name,email:email,project:project,message:msg,time:new Date().toLocaleString('en-IN',{dateStyle:'medium',timeStyle:'short'})});
   saveMsgs(msgs);
-  setTimeout(()=>{
-    btn.textContent='Message Sent ✓';btn.style.background='linear-gradient(135deg,#059669,#10b981)';
-    ['fName','fEmail','fMsg'].forEach(id=>document.getElementById(id).value='');
+  setTimeout(function(){
+    btn.textContent = 'Message Sent ✓';
+    btn.style.background = 'linear-gradient(135deg,#059669,#10b981)';
+    document.getElementById('fName').value='';
+    document.getElementById('fEmail').value='';
+    document.getElementById('fMsg').value='';
     document.getElementById('fProject').value='';
-    setTimeout(()=>{btn.disabled=false;btn.textContent='Send Message ✦';btn.style.background='';},3000);
-  },900);
+    setTimeout(function(){ btn.disabled=false; btn.textContent='Send Message ✦'; btn.style.background=''; }, 3000);
+  }, 900);
 }
 
-/* ════ LIGHTBOX ════ */
-let lbImages=[], lbIdx=0;
+/* ═══ LIGHTBOX ═══ */
+var lbImages = [], lbIdx = 0;
+
 function buildLightboxData(){
-  lbImages=[];
-  document.querySelectorAll('.ss-card').forEach(card=>{
-    const img=card.querySelector('img');
-    const name=card.querySelector('.ss-page-name')?.textContent||'';
-    const pill=card.querySelector('.ss-page-pill')?.textContent||'';
-    const proj=card.closest('.ss-project')?.querySelector('.ss-project-label')?.textContent?.trim()||'';
-    lbImages.push({src:img.src, name, pill, proj});
+  lbImages = [];
+  document.querySelectorAll('.ss-card').forEach(function(card){
+    var img   = card.querySelector('img');
+    var name  = card.querySelector('.ss-page-name')  ? card.querySelector('.ss-page-name').textContent.trim()  : '';
+    var pill  = card.querySelector('.ss-page-pill')  ? card.querySelector('.ss-page-pill').textContent.trim()  : '';
+    var pLabel= card.closest('.ss-project') ? card.closest('.ss-project').querySelector('.ss-project-label') : null;
+    var proj  = pLabel ? pLabel.textContent.trim() : '';
+    var src   = img ? img.getAttribute('src') : '';
+    lbImages.push({src:src, name:name, pill:pill, proj:proj});
   });
 }
+
 function openLB(idx){
-  if(!lbImages.length)buildLightboxData();
-  lbIdx=idx;
+  buildLightboxData();
+  lbIdx = idx;
   renderLB();
-  document.getElementById('lightbox').classList.add('open');
-  document.body.style.overflow='hidden';
+  var lb = document.getElementById('lightbox');
+  if(lb) lb.classList.add('open');
+  document.body.style.overflow = 'hidden';
 }
 function closeLB(){
-  document.getElementById('lightbox').classList.remove('open');
-  document.body.style.overflow='';
+  var lb = document.getElementById('lightbox');
+  if(lb) lb.classList.remove('open');
+  document.body.style.overflow = '';
 }
 function shiftLB(dir){
-  lbIdx=(lbIdx+dir+lbImages.length)%lbImages.length;
+  if(!lbImages.length) return;
+  lbIdx = (lbIdx + dir + lbImages.length) % lbImages.length;
   renderLB();
 }
 function renderLB(){
-  const d=lbImages[lbIdx];
-  const lbImg=document.getElementById('lbImg');
-  lbImg.style.animation='none';lbImg.offsetHeight;lbImg.style.animation='lb-scale .3s cubic-bezier(.16,1,.3,1)';
-  lbImg.src=d.src.replace('w=700','w=1200');
-  lbImg.alt=d.name;
-  document.getElementById('lbCaption').innerHTML=`<strong>${d.proj}</strong> · ${d.name} · <span style="color:var(--accent)">${d.pill}</span> · ${lbIdx+1}/${lbImages.length}`;
+  if(!lbImages.length) return;
+  var d = lbImages[lbIdx];
+  var lbImg = document.getElementById('lbImg');
+  var hiSrc = d.src.indexOf('w=') !== -1 ? d.src.replace(/w=\d+/,'w=1400').replace(/q=\d+/,'q=90') : d.src;
+  if(lbImg){ lbImg.src = hiSrc; lbImg.alt = d.name; }
+  var cap = document.getElementById('lbCaption');
+  if(cap) cap.innerHTML = '<strong>'+d.proj+'</strong> &nbsp;·&nbsp; '+d.name+' &nbsp;·&nbsp; <span style="color:var(--accent3)">'+d.pill+'</span> &nbsp;·&nbsp; <span style="opacity:.5">'+(lbIdx+1)+'/'+lbImages.length+'</span>';
 }
-// Wire ss-cards click
-document.addEventListener('click',e=>{
-  const card=e.target.closest('.ss-card');
+
+document.addEventListener('click', function(e){
+  if(e.target.closest('#adminOverlay') || e.target.closest('nav') || e.target.closest('.mobile-menu')) return;
+  var card = e.target.closest('.ss-card');
   if(card){
-    if(!lbImages.length)buildLightboxData();
-    const cards=Array.from(document.querySelectorAll('.ss-card'));
-    openLB(cards.indexOf(card));
+    buildLightboxData();
+    var all = Array.from(document.querySelectorAll('.ss-card'));
+    openLB(all.indexOf(card));
   }
 });
-// Keyboard nav
-document.addEventListener('keydown',e=>{
-  if(!document.getElementById('lightbox').classList.contains('open'))return;
-  if(e.key==='ArrowRight')shiftLB(1);
-  if(e.key==='ArrowLeft')shiftLB(-1);
-  if(e.key==='Escape')closeLB();
+
+var lb = document.getElementById('lightbox');
+if(lb) lb.addEventListener('click', function(e){ if(!e.target.closest('.lb-inner')) closeLB(); });
+
+document.addEventListener('keydown', function(e){
+  var lb = document.getElementById('lightbox');
+  if(!lb || !lb.classList.contains('open')) return;
+  if(e.key==='ArrowRight') shiftLB(1);
+  if(e.key==='ArrowLeft')  shiftLB(-1);
+  if(e.key==='Escape')     closeLB();
 });
 
-function openAdmin(){document.getElementById('adminOverlay').classList.add('open');document.getElementById('aLogin').style.display='block';document.getElementById('aMsgs').style.display='none';document.getElementById('aPass').value='';document.getElementById('aErr').classList.remove('show');}
-function closeAdmin(){document.getElementById('adminOverlay').classList.remove('open');}
-function doLogin(){if(document.getElementById('aPass').value===PASS){document.getElementById('aLogin').style.display='none';document.getElementById('aMsgs').style.display='block';renderMsgs();}else{document.getElementById('aErr').classList.add('show');document.getElementById('aPass').value='';}}
-function doLogout(){document.getElementById('aLogin').style.display='block';document.getElementById('aMsgs').style.display='none';}
-function renderMsgs(){
-  const msgs=getMsgs();const list=document.getElementById('aMsgList');
-  document.getElementById('aCnt').textContent=msgs.length;list.innerHTML='';
-  if(!msgs.length){list.innerHTML='<div class="no-msgs">📭 No messages yet.<br>Messages will appear here once someone contacts you.</div>';return;}
-  msgs.forEach(m=>{const d=document.createElement('div');d.className='msg-card';d.innerHTML=`<button class="msg-del" onclick="delMsg(${m.id})">✕</button><div class="msg-head"><div class="msg-name">${X(m.name)}</div><div class="msg-time">${m.time}</div></div><div class="msg-email">${X(m.email)}</div>${m.project?`<div class="msg-proj">📌 ${X(m.project)}</div>`:''}<div class="msg-body">${X(m.message)}</div>`;list.appendChild(d);});
+/* ═══ ADMIN ═══ */
+function openAdmin(){
+  document.getElementById('adminOverlay').classList.add('open');
+  document.getElementById('aLogin').style.display='block';
+  document.getElementById('aMsgs').style.display='none';
+  document.getElementById('aPass').value='';
+  document.getElementById('aErr').classList.remove('show');
 }
-function delMsg(id){saveMsgs(getMsgs().filter(m=>m.id!==id));renderMsgs();}
-function X(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
-document.getElementById('adminOverlay').addEventListener('click',function(e){if(e.target===this)closeAdmin();});
-document.getElementById('aPass').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
-// Triple-click logo to open admin
-let nc=0,nt;
-document.getElementById('navLogo').addEventListener('click',()=>{nc++;clearTimeout(nt);nt=setTimeout(()=>nc=0,600);if(nc>=3){nc=0;openAdmin();}});
-let fc=0,ft;
-document.getElementById('adminTrigger').addEventListener('click',()=>{fc++;clearTimeout(ft);ft=setTimeout(()=>fc=0,600);if(fc>=3){fc=0;openAdmin();}});
+function closeAdmin(){ document.getElementById('adminOverlay').classList.remove('open'); }
+function doLogin(){
+  if(document.getElementById('aPass').value === PASS){
+    document.getElementById('aLogin').style.display='none';
+    document.getElementById('aMsgs').style.display='block';
+    renderMsgs();
+  } else {
+    document.getElementById('aErr').classList.add('show');
+    document.getElementById('aPass').value='';
+  }
+}
+function doLogout(){
+  document.getElementById('aLogin').style.display='block';
+  document.getElementById('aMsgs').style.display='none';
+}
+function renderMsgs(){
+  var msgs = getMsgs();
+  var list = document.getElementById('aMsgList');
+  document.getElementById('aCnt').textContent = msgs.length;
+  list.innerHTML = '';
+  if(!msgs.length){ list.innerHTML='<div class="no-msgs">📭 No messages yet.</div>'; return; }
+  msgs.forEach(function(m){
+    var d = document.createElement('div');
+    d.className = 'msg-card';
+    d.innerHTML = '<button class="msg-del" onclick="delMsg('+m.id+')">✕</button><div class="msg-head"><div class="msg-name">'+X(m.name)+'</div><div class="msg-time">'+m.time+'</div></div><div class="msg-email">'+X(m.email)+'</div>'+(m.project?'<div class="msg-proj">📌 '+X(m.project)+'</div>':'')+'<div class="msg-body">'+X(m.message)+'</div>';
+    list.appendChild(d);
+  });
+}
+function delMsg(id){ saveMsgs(getMsgs().filter(function(m){ return m.id!==id; })); renderMsgs(); }
+function X(s){ return String(s).replace(/[&<>"']/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+
+var adminOv = document.getElementById('adminOverlay');
+if(adminOv) adminOv.addEventListener('click', function(e){ if(e.target===this) closeAdmin(); });
+var aPass = document.getElementById('aPass');
+if(aPass) aPass.addEventListener('keydown', function(e){ if(e.key==='Enter') doLogin(); });
+
+/* Triple-click logo → admin */
+var _nc=0, _nt;
+var _logo = document.getElementById('navLogo');
+if(_logo) _logo.addEventListener('click', function(){
+  _nc++; clearTimeout(_nt); _nt=setTimeout(function(){ _nc=0; },600);
+  if(_nc>=3){ _nc=0; openAdmin(); }
+});
+var _at = document.getElementById('adminTrigger');
+if(_at){ var _fc=0,_ft; _at.addEventListener('click',function(){ _fc++;clearTimeout(_ft);_ft=setTimeout(function(){_fc=0;},600);if(_fc>=3){_fc=0;openAdmin();} }); }
 </script>
 </body>
 </html>
